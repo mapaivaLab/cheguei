@@ -159,6 +159,22 @@ var SettingsPage = exports.SettingsPage = (_dec = (0, _ionicAngular.Page)({
   templateUrl: 'build/pages/settings/settings.html'
 }), _dec(_class = function SettingsPage() {
   _classCallCheck(this, SettingsPage);
+
+  this.notificationRole = {
+    geolocalization: true,
+    hour: false
+  };
+
+  this.hourConfig = {
+    arriveTime: '08:00',
+    launchTime: '12:00',
+    backLaunchTime: '13:00',
+    endDayTime: '17:30'
+  };
+
+  this.toggleNotificationRole = function (hideRole) {
+    this.notificationRole[hideRole] = !this.notificationRole[hideRole];
+  };
 }) || _class);
 
 },{"ionic-angular":388}],4:[function(require,module,exports){

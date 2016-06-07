@@ -5,6 +5,18 @@
   <ion-title>Reembolsos</ion-title>
 </ion-navbar>
 
-<ion-content padding class="getting-started">
-  <h1>Oloko bixu loko</h1>
+<ion-content>
+  <ion-list no-borders>
+    <ion-item>
+      <ion-label>Mês</ion-label>
+        <ion-select [(ngModel)]="month">
+          <ion-option value="janeiro">Janeiro</ion-option>
+          <ion-option value="fevereiro">Fevereiro</ion-option>
+          <ion-option value="março">Março</ion-option>
+          <ion-option value="abril">Abril</ion-option>
+          <ion-option value="maio">Maio</ion-option>
+          <ion-option value="junho">Junho</ion-option>
+        </ion-select>
+    </ion-item>
+  </ion-list>
 </ion-content>
