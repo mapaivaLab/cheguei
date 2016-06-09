@@ -1,11 +1,17 @@
-import {Page} from 'ionic-angular';
+import {Page, Toast, NavController} from 'ionic-angular';
 
 
 @Page({
   templateUrl: 'build/pages/settings/settings.html'
 })
 export class SettingsPage {
-  constructor() {
+  static get parameters() {
+    return [[NavController]];
+  }
+
+  constructor(nav) {
+    this.nav = nav;
+
     this.notificationRole = {
       geolocalization: true,
       hour: false
@@ -21,5 +27,15 @@ export class SettingsPage {
     this.toggleNotificationRole = function(hideRole) {
       this.notificationRole[hideRole] = !this.notificationRole[hideRole];
     };
+  }
+
+  saveConfigs() {
+    const toast = Toast.create({
+      message: 'Configurações salvas com sucesso',
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+
+    this.nav.present(toast);
   }
 }
