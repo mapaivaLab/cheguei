@@ -29,7 +29,10 @@ class MyApp {
       { title: 'Resumo', component: Homepage, icon: 'paper' },
       { title: 'Reembolsos', component: VisitReportList, icon: 'grid' },
       { title: 'Novo relatório', component: NewReport, icon: 'add' },
-      { title: 'Cheguei com música', component: null, icon: 'headset' },
+      { title: 'Cheguei com música', component: null, icon: 'headset' }
+    ];
+
+    this.bottomPages = [
       { title: 'Configurações', component: SettingsPage, icon: 'settings' }
     ];
 

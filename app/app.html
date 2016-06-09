@@ -4,9 +4,14 @@
     <ion-title>Cheguei</ion-title>
   </ion-toolbar>
 
-  <ion-content>
-    <ion-list no-lines>
+  <ion-content id="sidebar-menu">
+    <ion-list no-lines class="first-block">
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{ p.icon }}" item-left></ion-icon> {{p.title}}
+      </button>
+    </ion-list>
+    <ion-list no-lines class="second-block">
+      <button ion-item *ngFor="let p of bottomPages" (click)="openPage(p)" bottom>
         <ion-icon name="{{ p.icon }}" item-left></ion-icon> {{p.title}}
       </button>
     </ion-list>
