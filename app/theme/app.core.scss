@@ -8,3 +8,37 @@
 // App Shared Sass variables belong in app.variables.scss.
 
 @import "../pages/homepage/homepage";
+
+.summary {
+  background-color: #fbfbdc;
+}
+
+.report {
+  border-bottom: 1px solid #DDD !important;
+
+  ion-label {
+    display: flex;
+    flex-direction: row;
+
+    .column {
+      flex: 1;
+
+      p {
+        margin: 10px 0 0;
+      }
+
+      .price {
+        font-size: 1.2em;
+        color: #000;
+      }
+
+      .company {
+        color: #E65959;
+      }
+    }
+
+    .right {
+      text-align: right;
+    }
+  }
+}

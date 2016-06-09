@@ -8,12 +8,8 @@
 
 
 <ion-content class="getting-started">
-
-  <ion-list no-borders>
-    <ion-list-header>
-      Mês de Junho
-    </ion-list-header>
-
+  <ion-item-divider light>Mês de Junho</ion-item-divider>
+  <ion-list no-lines>
     <ion-item>
       <ion-icon name='cash' item-left></ion-icon>
       Valor total
@@ -22,14 +18,14 @@
       </ion-note>
     </ion-item>
     <ion-item>
-      <ion-icon name='clock' item-left></ion-icon>
+      <ion-icon name="time" item-left></ion-icon>
       Horas totais
       <ion-note item-right>
         {{ totalHours }} h
       </ion-note>
     </ion-item>
     <ion-item>
-      <ion-icon name='clock' item-left></ion-icon>
+      <ion-icon name="time" item-left></ion-icon>
       Horas produtivas
       <ion-note item-right>
         {{ productiveHours }} h
@@ -39,27 +35,23 @@
       <ion-icon name='car' item-left></ion-icon>
       Quilômetragem
       <ion-note item-right>
-        {{ mileage }} KG
+        {{ mileage }} Km
       </ion-note>
     </ion-item>
   </ion-list>
-
-  <ion-list>
-    <ion-list-header>
-      Reembolsos
-    </ion-list-header>
-
+  <ion-item-divider light>Reembolsos</ion-item-divider>
+  <ion-list no-lines>
     <!-- Summary List -->
     <ion-item-sliding>
-      <ion-item *ngFor="let v of visitsReportSummaries" class="summary">
-        <h2>{{ v.descricao }}</h2>
-        <p><strong>{{ v.cliente }}</strong></p>
-        <h4>RASCUNHO</h4>
-
-        <ion-note item-right>
-          <p>{{ v.data | date:"dd/MM/yyyy" }}</p>
-          <p>R$ {{ sumReportCost(v) }}</p>
-        </ion-note>
+      <ion-item *ngFor="let v of visitsReportSummaries" class="report summary">
+        <div class="column">
+          <h2>{{ v.descricao }}</h2>
+          <p class="company">{{ v.cliente }}</p>
+        </div>
+        <div class="column right">
+          <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
+          <p class="price">R$ {{ sumReportCost(v) }}</p>
+        </div>
       </ion-item>
       <ion-item-options>
         <button secondary>
@@ -70,15 +62,15 @@
     </ion-item-sliding>
 
     <!-- Visit Report List -->
-    <ion-item *ngFor="let v of visitsReport">
-      <h2>{{ v.descricao }}</h2>
-      <p><strong>{{ v.cliente }}</strong></p>
-      <h4>RASCUNHO</h4>
-
-      <ion-note item-right>
-        <p>{{ v.data | date:"dd/MM/yyyy" }}</p>
-        <p>R$ {{ sumReportCost(v) }}</p>
-      </ion-note>
+    <ion-item *ngFor="let v of visitsReport" class="report">
+      <div class="column">
+        <h2>{{ v.descricao }}</h2>
+        <p class="company">{{ v.cliente }}</p>
+      </div>
+      <div class="column right">
+        <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
+        <p class="price">R$ {{ sumReportCost(v) }}</p>
+      </div>
     </ion-item>
   </ion-list>
 

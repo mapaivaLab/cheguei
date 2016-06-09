@@ -27,6 +27,7 @@ class MyApp {
     this.pages = [
       { title: 'Resumo', component: Homepage, icon: 'paper' },
       { title: 'Reembolsos', component: VisitReportList, icon: 'grid' },
+      { title: 'Cheguei com música', component: null, icon: 'headset' },
       { title: 'Configurações', component: SettingsPage, icon: 'settings' }
     ];
 
