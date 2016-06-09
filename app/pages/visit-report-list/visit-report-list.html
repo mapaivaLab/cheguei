@@ -3,6 +3,11 @@
     <ion-icon name="menu"></ion-icon>
   </button>
   <ion-title>Reembolsos</ion-title>
+  <ion-buttons end>
+    <button royal>
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>
 
 <ion-content>
@@ -10,13 +15,42 @@
     <ion-item>
       <ion-label>Mês</ion-label>
         <ion-select [(ngModel)]="month">
-          <ion-option value="janeiro">Janeiro</ion-option>
-          <ion-option value="fevereiro">Fevereiro</ion-option>
-          <ion-option value="março">Março</ion-option>
-          <ion-option value="abril">Abril</ion-option>
-          <ion-option value="maio">Maio</ion-option>
-          <ion-option value="junho">Junho</ion-option>
+          <ion-option *ngFor="let m of monthList" value="{{ m }}">{{ m }}</ion-option>
         </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list no-lines>
+    <!-- Summary List -->
+    <ion-item-sliding>
+      <ion-item *ngFor="let v of visitsReportSummaries" class="report summary" (press)="pressReport(v)">
+        <div class="column">
+          <h2>{{ v.descricao }}</h2>
+          <p class="company">{{ v.cliente }}</p>
+        </div>
+        <div class="column right">
+          <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
+          <p class="price">R$ {{ sumReportCost(v) }}</p>
+        </div>
+      </ion-item>
+      <ion-item-options>
+        <button secondary>
+          <ion-icon name="checkmark"></ion-icon>
+          Salvar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!-- Visit Report List -->
+    <ion-item *ngFor="let v of visitsReport" class="report" (press)="pressReport(v)">
+      <div class="column">
+        <h2>{{ v.descricao }}</h2>
+        <p class="company">{{ v.cliente }}</p>
+      </div>
+      <div class="column right">
+        <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
+        <p class="price">R$ {{ sumReportCost(v) }}</p>
+      </div>
     </ion-item>
   </ion-list>
 
