@@ -5,4 +5,15 @@
     line-height: 22px;
     font-size: 16px;
   }
+
+  .overview {
+
+    ion-item {
+      color: #333;
+
+      ion-note {
+        color: #000;
+      }
+    }
+  }
 }
