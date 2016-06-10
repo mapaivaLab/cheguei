@@ -18,6 +18,18 @@
           <ion-option *ngFor="let m of monthList" value="{{ m }}">{{ m }}</ion-option>
         </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-label>Cliente</ion-label>
+        <ion-select [(ngModel)]="client">
+          <ion-option *ngFor="let c of clientLists" value="{{ c }}">{{ c }}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Usuário</ion-label>
+        <ion-select [(ngModel)]="user">
+          <ion-option *ngFor="let u of userList" value="{{ u }}">{{ u }}</ion-option>
+        </ion-select>
+    </ion-item>
   </ion-list>
   <ion-item-divider light>Reembolsos</ion-item-divider>
   <ion-list no-lines>

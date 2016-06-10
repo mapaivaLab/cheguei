@@ -27,6 +27,8 @@ export class VisitReportList {
       "Janeiro/2015"
     ];
 
+    this.month = this.monthList[0];
+
     // Fill repots lists
     this.visitsReportSummaries = [
       {
@@ -52,6 +54,42 @@ export class VisitReportList {
     this.visitsReport = [
       {
         cliente: "CODIT",
+        data: new Date("2016-06-02T00:00:00-03:00"),
+        descricao: "Dia de trabalho",
+        detalheDespesa: "Outros gastos = transporte",
+        detalheVisita: "",
+        duracao: "1900-01-01T09:14:00-03:06",
+        horaChegada: "1900-01-01T08:02:00-03:06",
+        horaSaida:"1900-01-01T17:16:00-03:06",
+        id_relatorioVisita:"xD20160602H201725976R000000080",
+        intervaloEspera: "1900-01-01T00:00:00-03:06",
+        outrosGastos: "55.6",
+        pedagio: "0.0",
+        quilometragem: "0.0",
+        refeicao: "8",
+        tempoImprodutivo: "1900-01-01T00:30:00-03:06",
+        usuarioInsercao: "Matheus Paiva"
+      },
+      {
+        cliente: "CODIT",
+        data: new Date("2016-06-02T00:00:00-03:00"),
+        descricao: "Dia de trabalho",
+        detalheDespesa: "Outros gastos = transporte",
+        detalheVisita: "",
+        duracao: "1900-01-01T09:14:00-03:06",
+        horaChegada: "1900-01-01T08:02:00-03:06",
+        horaSaida:"1900-01-01T17:16:00-03:06",
+        id_relatorioVisita:"xD20160602H201725976R000000080",
+        intervaloEspera: "1900-01-01T00:00:00-03:06",
+        outrosGastos: "55.6",
+        pedagio: "0.0",
+        quilometragem: "0.0",
+        refeicao: "8",
+        tempoImprodutivo: "1900-01-01T00:30:00-03:06",
+        usuarioInsercao: "Matheus Paiva"
+      },
+      {
+        cliente: "FEST COLOR",
         data: new Date("2016-06-02T00:00:00-03:00"),
         descricao: "Dia de trabalho",
         detalheDespesa: "Outros gastos = transporte",
