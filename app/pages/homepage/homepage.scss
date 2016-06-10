@@ -11,9 +11,15 @@
   }
 
   .overview {
+    margin: 0;
+    padding: 10px 0;
 
     ion-item {
-      color: #333;
+      // color: #333;
+
+      ion-icon {
+        color: #6ba09b;
+      }
 
       ion-note {
         color: #000;

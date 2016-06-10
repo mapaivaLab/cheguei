@@ -16,9 +16,30 @@
 .report {
   border-bottom: 1px solid #DDD !important;
 
+  .avatar {
+    background: #6dcc2a;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: bold;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    text-transform: uppercase;
+    float: left;
+    margin-right: 20px;
+  }
+
+  .summary-avatar {
+    @extend .avatar;
+    background: #ffd180;
+    color: #775924;
+  }
+
   ion-label {
     display: flex;
     flex-direction: row;
+    margin: 10px 10px 0px 0px;
 
     .column {
       flex: 1;
@@ -47,16 +68,14 @@
 #sidebar-menu {
 
   scroll-content {
-    display: flex;
-    flex-direction: column;
 
-    .first-block {
-      flex: 1;
+    ion-icon {
+      color: #6ba09b;
     }
 
     .second-block {
-      margin-bottom: 0;
-      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.26);
+      margin-top: 16px;
+      border-top: #DDD 1px solid;
     }
   }
 }

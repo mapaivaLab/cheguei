@@ -19,12 +19,15 @@
         </ion-select>
     </ion-item>
   </ion-list>
-
+  <ion-item-divider light>Reembolsos</ion-item-divider>
   <ion-list no-lines>
     <!-- Summary List -->
     <ion-item-sliding>
       <ion-item *ngFor="let v of visitsReportSummaries" class="report summary" (press)="pressReport(v)">
         <div class="column">
+          <div class="summary-avatar" item-left>
+            <ion-icon name="paper"></ion-icon>
+          </div>
           <h2>{{ v.descricao }}</h2>
           <p class="company">{{ v.cliente }}</p>
         </div>
@@ -44,6 +47,9 @@
     <!-- Visit Report List -->
     <ion-item *ngFor="let v of visitsReport" class="report" (press)="pressReport(v)">
       <div class="column">
+        <div class="avatar" item-left>
+          {{ v.cliente[0] }}
+        </div>
         <h2>{{ v.descricao }}</h2>
         <p class="company">{{ v.cliente }}</p>
       </div>
