@@ -4,7 +4,6 @@ import {StatusBar} from 'ionic-native';
 
 import {Homepage} from './pages/homepage/homepage';
 import {SettingsPage} from './pages/settings/settings';
-import {NewReport} from './pages/newReport/newReport';
 import {VisitReportList} from './pages/visit-report-list/visit-report-list';
 
 
@@ -27,9 +26,8 @@ class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Resumo', component: Homepage, icon: 'paper' },
-      { title: 'Reembolsos', component: VisitReportList, icon: 'grid' },
-      { title: 'Novo relatório', component: NewReport, icon: 'add' },
-      { title: 'Cheguei com música', component: null, icon: 'headset' }
+      { title: 'Reembolsos', component: VisitReportList, icon: 'grid' }
+      // { title: 'Cheguei com música', component: null, icon: 'headset' }
     ];
 
     this.bottomPages = [

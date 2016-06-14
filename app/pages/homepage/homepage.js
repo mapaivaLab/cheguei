@@ -1,11 +1,17 @@
-import {Page} from 'ionic-angular';
-
+import {Page, NavController} from 'ionic-angular';
+import {NewReport} from '../newReport/newReport';
 
 @Page({
   templateUrl: 'build/pages/homepage/homepage.html'
 })
 export class Homepage {
-  constructor() {
+  static get parameters() {
+    return [[NavController]];
+  }
+
+  constructor(nav) {
+    this.nav = nav;
+
     // Fill consolidated fields
     this.mileage = parseFloat("0.0").toFixed(2);
     this.monthList = ["Junho/2016", "Maio/2016", "Abril/2016", "Março/2016", "Fevereiro/2016", "Janeiro/2016"];
@@ -55,9 +61,13 @@ export class Homepage {
         usuarioInsercao: "Matheus Paiva"
       }
     ];
+  }
 
-    this.sumReportCost = function (report) {
-      return parseFloat(report.outrosGastos) + parseFloat(report.refeicao);
-    }
+  sumReportCost(report) {
+    return parseFloat(report.outrosGastos) + parseFloat(report.refeicao);
+  }
+
+  openNewReportPage() {
+    this.nav.push(NewReport);
   }
 }

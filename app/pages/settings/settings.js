@@ -32,6 +32,7 @@ export class SettingsPage {
   saveConfigs() {
     const toast = Toast.create({
       message: 'Configurações salvas com sucesso',
+      duration: 3000,
       showCloseButton: true,
       closeButtonText: 'Ok'
     });

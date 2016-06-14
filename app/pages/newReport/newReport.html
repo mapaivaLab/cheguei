@@ -1,7 +1,4 @@
 <ion-navbar *navbar danger>
-  <button menuToggle *ngIf="!selectedItem">
-    <ion-icon name="menu"></ion-icon>
-  </button>
   <ion-title>Novo Reembolso</ion-title>
   <ion-buttons end>
     <button royal>
@@ -11,5 +8,24 @@
 </ion-navbar>
 
 <ion-content>
-  asdjashkjd
+  <ion-item-divider light>Reembolso</ion-item-divider>
+  <ion-list no-lines>
+    <ion-item>
+      <ion-icon name="restaurant" item-left></ion-icon>
+      <ion-label stacked>Refeição</ion-label>
+      <ion-input type="text" placeholder="30"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Valor transporte diário</ion-label>
+      <ion-input type="text" placeholder="15"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Descrição padrão</ion-label>
+      <ion-input type="text" placeholder="Excelente dia de trabalho"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Descrição padrão</ion-label>
+      <ion-input type="text" placeholder="Excelente dia de trabalho"></ion-input>
+    </ion-item>
+  </ion-list>
 </ion-content>

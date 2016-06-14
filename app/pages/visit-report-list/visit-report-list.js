@@ -1,11 +1,17 @@
-import {Page} from 'ionic-angular';
-
+import {Page, NavController} from 'ionic-angular';
+import {NewReport} from '../newReport/newReport';
 
 @Page({
   templateUrl: 'build/pages/visit-report-list/visit-report-list.html'
 })
 export class VisitReportList {
-  constructor() {
+  static get parameters() {
+    return [[NavController]];
+  }
+
+  constructor(nav) {
+    this.nav = nav;
+
     this.monthList = [
       "Junho/2016",
       "Maio/2016",
@@ -115,5 +121,9 @@ export class VisitReportList {
 
   sumReportCost(report) {
     return parseFloat(report.outrosGastos) + parseFloat(report.refeicao);
+  }
+
+  openNewReportPage() {
+    this.nav.push(NewReport);
   }
 }
