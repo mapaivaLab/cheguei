@@ -34,3 +34,7 @@ node_modules
 
 # Folder www/build
 www/build
+
+# Binary plugins
+plugins/cordova**
+plugins/ionic**
