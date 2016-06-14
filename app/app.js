@@ -1,11 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Platform, MenuController} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
+import {ionicBootstrap, Platform, MenuController, Alert} from 'ionic-angular';
+import {StatusBar, Geolocation, Vibration} from 'ionic-native';
 
 import {Homepage} from './pages/homepage/homepage';
 import {SettingsPage} from './pages/settings/settings';
 import {VisitReportList} from './pages/visit-report-list/visit-report-list';
-
 
 @Component({
   templateUrl: 'build/app.html',
@@ -18,9 +17,11 @@ class MyApp {
     return [[Platform], [MenuController]];
   }
 
-  constructor(platform, menu) {
+  constructor(platform, menu, nav) {
     this.platform = platform;
     this.menu = menu;
+    this.nav = nav;
+
     this.initializeApp();
 
     // set our app's pages
@@ -40,9 +41,9 @@ class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+
+      this.watchLocation();
     });
   }
 
@@ -51,6 +52,50 @@ class MyApp {
     this.menu.close();
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
+  }
+
+  watchLocation() {
+    // Starts Geolocation watcher
+    let watch = Geolocation.watchPosition();
+
+    // Notification Flag
+    let canNotificate = true;
+
+    watch.subscribe((data) => {
+
+      if (data.coords.latitude < -22 && data.coords.longitude < -45 && canNotificate) {
+        console.log(data.coords);
+
+        this.doConfirm();
+
+        canNotificate = false;
+      }
+    });
+  }
+
+  doConfirm() {
+    Vibration.vibrate(500);
+
+    let confirm = Alert.create({
+      title: 'Chegando?',
+      message: 'Chegando em casa Jhow?',
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+
+    this.nav.present(confirm);
   }
 }
 
