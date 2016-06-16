@@ -62,10 +62,9 @@ class MyApp {
     let canNotificate = true;
 
     watch.subscribe((data) => {
+      console.log(data.coords);
 
       if (data.coords.latitude < -22 && data.coords.longitude < -45 && canNotificate) {
-        console.log(data.coords);
-
         this.doConfirm();
 
         canNotificate = false;

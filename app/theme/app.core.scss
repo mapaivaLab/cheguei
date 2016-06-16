@@ -10,6 +10,8 @@
 @import "../pages/homepage/homepage";
 @import "../pages/visit-report-list/visit-report-list";
 
+$android-header-box-shadow: rgba(0,0,0,0.5) 0 1px 6px;
+
 .summary {
   background-color: #fbfbdc;
 }
@@ -71,17 +73,19 @@
   scroll-content {
 
     button {
-      font-weight: bold;
-      color: #333;
+      font-weight: 500;
+      color: #444;
 
       ion-icon {
-        color: #6ba09b;
+        // color: #6ba09b;
+        color: #999;
       }
     }
 
     .second-block {
-      margin-top: 16px;
-      border-top: #DDD 1px solid;
+      padding-top: 10px;
+      margin-top: 10px;
+      border-top: #F4F4F4 1px solid;
     }
   }
 }

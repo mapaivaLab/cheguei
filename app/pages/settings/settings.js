@@ -1,5 +1,5 @@
 import {Page, Toast, NavController} from 'ionic-angular';
-
+import {SearchAddress} from '../searchAddress/searchAddress';
 
 @Page({
   templateUrl: 'build/pages/settings/settings.html'
@@ -23,10 +23,10 @@ export class SettingsPage {
       backLaunchTime: '13:00',
       endDayTime: '17:30'
     };
+  }
 
-    this.toggleNotificationRole = function(hideRole) {
-      this.notificationRole[hideRole] = !this.notificationRole[hideRole];
-    };
+  toggleNotificationRole(hideRole) {
+    this.notificationRole[hideRole] = !this.notificationRole[hideRole];
   }
 
   saveConfigs() {
@@ -38,5 +38,9 @@ export class SettingsPage {
     });
 
     this.nav.present(toast);
+  }
+
+  openSearchAddressPage() {
+    this.nav.push(SearchAddress);
   }
 }

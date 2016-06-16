@@ -1,0 +1,12 @@
+<ion-navbar *navbar danger>
+  <ion-title>Buscar endereço</ion-title>
+</ion-navbar>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let location of locations" (click)="saveLocation(location)">
+      {{ location.formatted_address }}
+    </ion-item>
+  </ion-list>
+</ion-content>
