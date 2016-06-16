@@ -2,9 +2,15 @@ import {Component, ViewChild} from '@angular/core';
 import {ionicBootstrap, Platform, MenuController, Alert} from 'ionic-angular';
 import {StatusBar, Geolocation, Vibration} from 'ionic-native';
 
+import {AppStorage} from './core/appStorage';
+
 import {Homepage} from './pages/homepage/homepage';
 import {SettingsPage} from './pages/settings/settings';
 import {VisitReportList} from './pages/visit-report-list/visit-report-list';
+
+// Global variables
+window.Storage = new AppStorage();
+window.CONFIGS = Storage.getConfigs();
 
 @Component({
   templateUrl: 'build/app.html',

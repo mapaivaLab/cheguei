@@ -12,17 +12,8 @@ export class SettingsPage {
   constructor(nav) {
     this.nav = nav;
 
-    this.notificationRole = {
-      geolocalization: true,
-      hour: false
-    };
-
-    this.hourConfig = {
-      arriveTime: '08:00',
-      launchTime: '12:00',
-      backLaunchTime: '13:00',
-      endDayTime: '17:30'
-    };
+    this.notificationRole = CONFIGS.notificationRole;
+    this.defaultValues = CONFIGS.defaultValues;
   }
 
   toggleNotificationRole(hideRole) {
@@ -30,6 +21,8 @@ export class SettingsPage {
   }
 
   saveConfigs() {
+    Storage.saveConfigs(CONFIGS);
+
     const toast = Toast.create({
       message: 'Configurações salvas com sucesso',
       duration: 3000,

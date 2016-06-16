@@ -20,10 +20,13 @@
       <ion-toggle secondary [(ngModel)]="notificationRole.geolocalization"
         (click) ="toggleNotificationRole('hour')"></ion-toggle>
     </ion-item>
-    <ion-item *ngIf="notificationRole.geolocalization">
-      <ion-icon name="pin" item-left></ion-icon>
-      <ion-input type="text" placeholder="Endereço" disabled (click)="openSearchAddressPage()"></ion-input>
-    </ion-item>
+    <ion-list no-lines *ngIf="notificationRole.geolocalization" class="sub-list">
+      <button ion-item (click)="openSearchAddressPage()">
+        <ion-icon name="pin" item-left></ion-icon>
+        <ion-label>{{ notificationRole.geolocConfig.address || 'Endereço' }}</ion-label>
+      </button>
+    </ion-list>
+
     <ion-item>
       <ion-icon name="time" item-left></ion-icon>
       <ion-label>Horário</ion-label>
@@ -31,26 +34,26 @@
         (click)="toggleNotificationRole('geolocalization')"></ion-toggle>
     </ion-item>
 
-    <ion-list *ngIf="notificationRole.hour">
+    <ion-list *ngIf="notificationRole.hour" class="sub-list">
       <ion-item>
         <ion-icon name="sunny" item-left></ion-icon>
         <ion-label>Chegada</ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="hourConfig.arriveTime"></ion-datetime>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="notificationRole.hourConfig.arriveTime"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-icon name="restaurant" item-left></ion-icon>
         <ion-label>Almoço</ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="hourConfig.launchTime"></ion-datetime>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="notificationRole.hourConfig.launchTime"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-icon name="cafe" item-left></ion-icon>
         <ion-label>Volta almoço</ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="hourConfig.backLaunchTime"></ion-datetime>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="notificationRole.hourConfig.backLaunchTime"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-icon name="moon" item-left></ion-icon>
         <ion-label>Saída</ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="hourConfig.endDayTime"></ion-datetime>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="notificationRole.hourConfig.endDayTime"></ion-datetime>
       </ion-item>
     </ion-list>
   </ion-list>
@@ -58,15 +61,15 @@
   <ion-list no-lines>
     <ion-item>
       <ion-label stacked>Valor almoço diário</ion-label>
-      <ion-input type="number" placeholder="30"></ion-input>
+      <ion-input type="number" placeholder="30" [(ngModel)]="defaultValues.launchPrice"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Valor transporte diário</ion-label>
-      <ion-input type="number" placeholder="15"></ion-input>
+      <ion-input type="number" placeholder="15" [(ngModel)]="defaultValues.transportPrice"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Descrição padrão</ion-label>
-      <ion-input type="text" placeholder="Excelente dia de trabalho"></ion-input>
+      <ion-input type="text" placeholder="Excelente dia de trabalho" [(ngModel)]="defaultValues.reportDescription"></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>

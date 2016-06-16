@@ -4,9 +4,9 @@
 
 <ion-content>
   <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="getItems($event)"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let location of locations" (click)="saveLocation(location)">
-      {{ location.formatted_address }}
-    </ion-item>
+  <ion-list class="sub-list">
+    <button ion-item *ngFor="let location of locations" (click)="saveLocation(location)">
+      <ion-icon name="pin" item-left></ion-icon> {{ location.formatted_address }}
+    </button>
   </ion-list>
 </ion-content>

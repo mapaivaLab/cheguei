@@ -14,6 +14,17 @@
   background-color: #fbfbdc;
 }
 
+.sub-list {
+
+  button, ion-item {
+    color: #444;
+
+    ion-icon {
+      color: #737373;
+    }
+  }
+}
+
 .report {
   border-bottom: 1px solid #DDD !important;
 
@@ -69,6 +80,7 @@
 #sidebar-menu {
 
   scroll-content {
+    padding-top: 10px;
 
     button {
       font-weight: 500;

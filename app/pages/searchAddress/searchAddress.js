@@ -52,6 +52,10 @@ export class SearchAddress {
   }
 
   saveLocation(location) {
+    CONFIGS.notificationRole.geolocConfig.address = location.formatted_address;
+    CONFIGS.notificationRole.geolocConfig.lat = location.geometry.location.lat;
+    CONFIGS.notificationRole.geolocConfig.lng = location.geometry.location.lat;
+
     this.nav.pop();
   }
 }
