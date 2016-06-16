@@ -10,8 +10,6 @@
 @import "../pages/homepage/homepage";
 @import "../pages/visit-report-list/visit-report-list";
 
-$android-header-box-shadow: rgba(0,0,0,0.5) 0 1px 6px;
-
 .summary {
   background-color: #fbfbdc;
 }
@@ -77,8 +75,7 @@ $android-header-box-shadow: rgba(0,0,0,0.5) 0 1px 6px;
       color: #444;
 
       ion-icon {
-        // color: #6ba09b;
-        color: #999;
+        color: #737373;
       }
     }
 
