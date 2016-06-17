@@ -10,19 +10,18 @@
 <ion-content>
   <ion-list no-lines>
     <ion-item>
-      <ion-icon name="restaurant" item-left></ion-icon>
-      <ion-label stacked>Cilente</ion-label>
-      <ion-input type="text" placeholder="30"></ion-input>
+      <ion-icon name="contact" item-left></ion-icon>
+      <ion-input type="text" placeholder="Cilente"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon name="restaurant" item-left></ion-icon>
-      <ion-label stacked>Descrição</ion-label>
-      <ion-input type="text" placeholder="30"></ion-input>
+      <ion-icon name="list-box" item-left></ion-icon>
+      <ion-input type="text" placeholder="30" placeholder="Descrição"
+        [(ngModel)]="newReport.description"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="calendar" item-left></ion-icon>
       <ion-label>Data</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="newReport.date"></ion-datetime>
     </ion-item>
   </ion-list>
 
@@ -39,36 +38,49 @@
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-icon name="restaurant" item-left></ion-icon>
+      <ion-icon name="beer" item-left></ion-icon>
       <ion-label>Tempo improdutivo</ion-label>
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-icon name="restaurant" item-left></ion-icon>
+      <ion-icon name="time" item-left></ion-icon>
       <ion-label>Intervalo de espera</ion-label>
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
     </ion-item>
   </ion-list>
 
-  <ion-item-divider light>Tempo</ion-item-divider>
+  <ion-item-divider light>Detalhes da visita</ion-item-divider>
+
+  <ion-list no-lines>
+    <ion-item>
+      <ion-icon name="text" item-left></ion-icon>
+      <ion-textarea placeholder="Detalhe"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-item-divider light>Despesas</ion-item-divider>
 
   <ion-list no-lines>
     <ion-item>
       <ion-icon name="restaurant" item-left></ion-icon>
-      <ion-label stacked>Refeição</ion-label>
-      <ion-input type="text" placeholder="30"></ion-input>
+      <ion-input type="number" placeholder="Refeição" [(ngModel)]="newReport.meal"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Valor transporte diário</ion-label>
-      <ion-input type="text" placeholder="15"></ion-input>
+      <ion-icon name="cash" item-left></ion-icon>
+      <ion-input type="number" placeholder="Outros Gastos"
+        [(ngModel)]="newReport.othersExpenses"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Descrição padrão</ion-label>
-      <ion-input type="text" placeholder="Excelente dia de trabalho"></ion-input>
+      <ion-icon name="car" item-left></ion-icon>
+      <ion-input type="number" placeholder="Quilometragem (KM)"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Descrição padrão</ion-label>
-      <ion-input type="text" placeholder="Excelente dia de trabalho"></ion-input>
+      <ion-icon name="restaurant" item-left></ion-icon>
+      <ion-input type="number" placeholder="Pedágio"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="text" item-left></ion-icon>
+      <ion-textarea placeholder="Detalhe da despesa"></ion-textarea>
     </ion-item>
   </ion-list>
 </ion-content>

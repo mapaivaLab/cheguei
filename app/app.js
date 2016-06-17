@@ -71,7 +71,7 @@ class MyApp {
       console.log(data.coords);
 
       if (data.coords.latitude < -22 && data.coords.longitude < -45 && canNotificate) {
-        this.doConfirm();
+        // this.doConfirm();
 
         canNotificate = false;
       }

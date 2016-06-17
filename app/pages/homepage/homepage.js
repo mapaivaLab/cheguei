@@ -20,7 +20,7 @@ export class Homepage {
     this.totalHours = parseFloat("18.683332").toFixed(2);
 
     // Fill repots lists
-    this.visitsReportSummaries = [
+    this.visitsReportDrafts = [
       {
         cliente: "CODIT",
         data: new Date("2016-06-02T00:00:00-03:00"),

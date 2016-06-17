@@ -36,7 +36,7 @@ export class VisitReportList {
     this.month = this.monthList[0];
 
     // Fill repots lists
-    this.visitsReportSummaries = [
+    this.visitsReportDrafts = [
       {
         cliente: "CODIT",
         data: new Date("2016-06-02T00:00:00-03:00"),

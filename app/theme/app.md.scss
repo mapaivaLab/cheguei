@@ -30,11 +30,15 @@
 // --------------------------------------------------
 // CSS that should only apply to the Material Design app
 
-// <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-// body {
-//   font-family: "Montserrat", "Roboto", sans-serif !important;
-// }
+$special-font-family: "Montserrat", "Roboto", sans-serif !important;
 
 .cheguei-menu-toolbar, ion-navbar {
+  font-family: $special-font-family;
   box-shadow: rgba(0,0,0,0.5) 0 1px 6px;
+}
+
+ion-item-divider[light] {
+  color: #444;
+  background-color: #f4f4f4;
+  font-weight: 500;
 }
