@@ -70,4 +70,8 @@ export class Homepage {
   openNewReportPage() {
     this.nav.push(NewReport);
   }
+
+  openEditPage(report) {
+    console.log('Open edit page', report);
+  }
 }

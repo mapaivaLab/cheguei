@@ -1,0 +1,40 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "cheguei"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "cheguei"
+        }
+    }
+}

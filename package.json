@@ -28,7 +28,7 @@
     "run-sequence": "1.1.5"
   },
   "name": "cheguei",
-  "description": "cheguei: An Ionic project",
+  "description": "Cheguei! Aplicativo de Reembolso de despesas",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",

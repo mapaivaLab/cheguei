@@ -43,7 +43,7 @@
   <ion-list no-lines>
     <!-- Draft List -->
     <ion-item-sliding>
-      <ion-item *ngFor="let v of visitsReportDrafts" class="report draft">
+      <button ion-item *ngFor="let v of visitsReportDrafts" class="report draft" (click)="openEditPage(v)">
         <div class="column">
           <div class="draft-avatar" item-left>
             <ion-icon name="paper"></ion-icon>
@@ -55,7 +55,7 @@
           <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
           <p class="price">R$ {{ sumReportCost(v) }}</p>
         </div>
-      </ion-item>
+      </button>
       <ion-item-options>
         <button secondary>
           <ion-icon name="checkmark"></ion-icon>
@@ -65,7 +65,7 @@
     </ion-item-sliding>
 
     <!-- Visit Report List -->
-    <ion-item *ngFor="let v of visitsReport" class="report">
+    <button ion-item *ngFor="let v of visitsReport" class="report" (click)="openEditPage(v)">
       <div class="column">
         <div class="avatar" item-left>
           {{ v.cliente[0] }}
@@ -77,7 +77,7 @@
         <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
         <p class="price">R$ {{ sumReportCost(v) }}</p>
       </div>
-    </ion-item>
+    </button>
   </ion-list>
 
   <button fab fab-right fab-bottom fab-fixed danger (click)="openNewReportPage()"><ion-icon name="add"></ion-icon></button>
