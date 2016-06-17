@@ -38,3 +38,8 @@ www/build
 # Binary plugins
 plugins/cordova**
 plugins/ionic**
+
+# Platforms folders
+platforms/android
+platforms/ios
+platforms/windows
