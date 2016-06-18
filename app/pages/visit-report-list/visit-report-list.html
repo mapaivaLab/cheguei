@@ -1,10 +1,15 @@
-<ion-navbar *navbar danger>
-  <button menuToggle *ngIf="!selectedItem">
+<ion-navbar *navbar danger [ngClass]="{'selectedReports' : isAnyReportSelected()}">
+  <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>Reembolsos</ion-title>
+  <ion-title *ngIf="!isAnyReportSelected()">Reembolsos</ion-title>
+  <ion-title *ngIf="isAnyReportSelected()">
+    {{ selectedReportsCount }}
+  </ion-title>
   <ion-buttons end>
     <button royal>
+      <ion-icon class="top-icon" name="trash" *ngIf="isAnyReportSelected()"></ion-icon>
+      <ion-icon class="top-icon" name="checkmark-circle" *ngIf="isAnyReportSelected()"></ion-icon>
       <ion-icon name="more"></ion-icon>
     </button>
   </ion-buttons>
@@ -35,7 +40,9 @@
   <ion-list no-lines>
     <!-- Draft List -->
     <ion-item-sliding>
-      <ion-item *ngFor="let v of visitsReportDrafts" class="report draft" (press)="pressReport(v)">
+      <button ion-item *ngFor="let v of visitsReportDrafts"
+        [ngClass]="{'selected-report draft': v.selected, 'report draft': !v.selected}"
+        (press)="pressReport(v)" (click)="openEditPage(v)">
         <div class="column">
           <div class="draft-avatar" item-left>
             <ion-icon name="paper"></ion-icon>
@@ -47,7 +54,7 @@
           <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
           <p class="price">R$ {{ sumReportCost(v) }}</p>
         </div>
-      </ion-item>
+      </button>
       <ion-item-options>
         <button secondary>
           <ion-icon name="checkmark"></ion-icon>
@@ -57,7 +64,9 @@
     </ion-item-sliding>
 
     <!-- Visit Report List -->
-    <ion-item *ngFor="let v of visitsReport" class="report" (press)="pressReport(v)">
+    <button ion-item *ngFor="let v of visitsReport"
+      [ngClass]="{'selected-report': v.selected, 'report': !v.selected}"
+      (press)="pressReport(v)" (click)="openEditPage(v)">
       <div class="column">
         <div class="avatar" item-left>
           {{ v.cliente[0] }}
@@ -69,7 +78,7 @@
         <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
         <p class="price">R$ {{ sumReportCost(v) }}</p>
       </div>
-    </ion-item>
+    </button>
   </ion-list>
 
   <button fab fab-right fab-bottom fab-fixed danger (click)="openNewReportPage()"><ion-icon name="add"></ion-icon></button>

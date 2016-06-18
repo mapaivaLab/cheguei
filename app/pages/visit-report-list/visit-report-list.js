@@ -12,6 +12,8 @@ export class VisitReportList {
   constructor(nav) {
     this.nav = nav;
 
+    this.selectedReportsCount = 0;
+
     this.monthList = [
       "Junho/2016",
       "Maio/2016",
@@ -115,8 +117,8 @@ export class VisitReportList {
     ];
   }
 
-  pressReport() {
-    console.log('Pressing it...');
+  pressReport(report) {
+    this.toggleReport(report);
   }
 
   sumReportCost(report) {
@@ -125,5 +127,33 @@ export class VisitReportList {
 
   openNewReportPage() {
     this.nav.push(NewReport);
+  }
+
+  openEditPage(report) {
+
+    if (report.selected) {
+      this.toggleReport(report);
+    } else if (this.isAnyReportSelected()) {
+      this.toggleReport(report);
+    } else {
+      console.log('Open edit page', report);
+    }
+  }
+
+  toggleReport(report) {
+
+    if (report.selected) {
+      report.selected = false;
+
+      this.selectedReportsCount--;
+    } else {
+      report.selected = true;
+
+      this.selectedReportsCount++;
+    }
+  }
+
+  isAnyReportSelected() {
+    return this.selectedReportsCount > 0;
   }
 }

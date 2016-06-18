@@ -18,6 +18,25 @@
   }
 }
 
+.toolbar-background {
+  transition: background 0.2s;
+}
+
+.selectedReports {
+
+  .toolbar-background {
+    background: #FFF !important;
+  }
+
+  .toolbar-title, ion-icon {
+    color: #757575 !important;
+  }
+
+  .top-icon {
+    padding-right: 30px;
+  }
+}
+
 .draft {
   background-color: #fbfbdc;
 }
@@ -52,6 +71,7 @@
 
   .draft-avatar {
     @extend .avatar;
+
     background: #ffd180;
     color: #775924;
   }
@@ -82,6 +102,20 @@
     .right {
       text-align: right;
     }
+  }
+}
+
+.selected-report {
+  @extend .report;
+
+  background: #ebf2ff;
+
+  .avatar {
+    background: #757575;
+  }
+
+  .draft-avatar {
+    color: rgba(255, 255, 255, 0.75);
   }
 }
 
