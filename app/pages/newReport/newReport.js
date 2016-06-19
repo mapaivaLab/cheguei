@@ -1,4 +1,4 @@
-import {Page, NavController, Alert, ActionSheet, Platform, NavParams} from "ionic-angular";
+import {Page, NavController, Alert, ActionSheet, Platform, NavParams, Toast} from "ionic-angular";
 import {Camera} from 'ionic-native';
 
 import {Draft} from '../../core/draft';
@@ -92,7 +92,17 @@ export class NewReport {
   saveReport() {
 
     if (this.newReport.horaChegada && this.newReport.horaSaida) {
-      console.log('Salva relatório no banco');
+
+      switch (this.saveMode) {
+        case SaveMode.CREATE:
+          console.log('Create a new report in the database');
+          break;
+        case SaveMode.UPDATE:
+          console.log('Update a new report in the database');
+          break;
+      }
+
+      this.nav.pop();
     } else {
 
       switch (this.saveMode) {
@@ -103,8 +113,8 @@ export class NewReport {
           Draft.updateDraft(this.newReport);
           break;
       }
-    }
 
-    this.nav.pop();
+      this.nav.pop();
+    }
   }
 }

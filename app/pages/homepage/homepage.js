@@ -1,4 +1,4 @@
-import {Page, NavController, Alert} from 'ionic-angular';
+import {Page, NavController, Alert, Toast} from 'ionic-angular';
 import {NewReport} from '../newReport/newReport';
 
 import {Draft} from '../../core/draft';
@@ -78,5 +78,34 @@ export class Homepage {
     });
 
     this.nav.present(alert);
+  }
+
+  saveDraft(report) {
+    const savingToast = Toast.create({
+      message: 'Salvando reembolso...',
+    });
+
+    this.nav.present(savingToast);
+
+    let bkpReport = report;
+
+    Draft.deleteDraft(report);
+
+    setTimeout(() => {
+      savingToast.dismiss();
+
+      const successToast = Toast.create({
+        message: 'Reembolso salvo com sucesso',
+        duration: 3000,
+        showCloseButton: true,
+        closeButtonText: 'Ok'
+      });
+
+      this.nav.present(successToast);
+
+      console.log(bkpReport);
+
+      savingToast.destroy();
+    }, 3000);
   }
 }
