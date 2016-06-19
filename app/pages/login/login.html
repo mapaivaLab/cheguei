@@ -17,15 +17,15 @@
         <ion-title>Cheguei!</ion-title>
       </ion-toolbar>
       <ion-list no-lines padding>
-        <ion-item>
-          <ion-icon name="contact" item-left></ion-icon>
-          <ion-input type="text" placeholder="Usuário" [(ngModel)]="authInfo.user"></ion-input>
+        <ion-item class="input">
+            <ion-label stacked>Usuário</ion-label>
+            <ion-input type="text" required [(ngModel)]="authInfo.user"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-icon name="key" item-left></ion-icon>
-          <ion-input type="password" placeholder="Senha" [(ngModel)]="authInfo.pass"></ion-input>
+        <ion-item class="input">
+          <ion-label stacked>Senha</ion-label>
+          <ion-input type="password" required [(ngModel)]="authInfo.pass"></ion-input>
         </ion-item>
-        <button secondary block outline (click)="login()">LOGIN</button>
+        <button secondary block  (click)="login()">LOGIN</button>
       </ion-list>
     </ion-slide>
   </ion-slides>

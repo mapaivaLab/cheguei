@@ -31,6 +31,10 @@
 
   ion-title {
     font-family: $styleFont;
+
+    .toolbar-title {
+      text-transform: capitalize;
+    }
   }
 
   button[block] {
@@ -39,5 +43,13 @@
 
   ion-item {
     background: none;
+  }
+
+  ion-item.input.ng-untouched::after {
+    border-color: #CCC;
+  }
+
+  ion-item.input.input-has-focus::after {
+    border-color: #387ef5;
   }
 }
