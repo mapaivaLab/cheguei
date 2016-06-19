@@ -1,4 +1,4 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, ActionSheet} from 'ionic-angular';
 import {NewReport} from '../newReport/newReport';
 
 @Page({
@@ -40,6 +40,7 @@ export class VisitReportList {
     // Fill repots lists
     this.visitsReportDrafts = [
       {
+        isDraft: true,
         cliente: "CODIT",
         data: new Date("2016-06-02T00:00:00-03:00"),
         descricao: "Dia de trabalho",
@@ -140,6 +141,10 @@ export class VisitReportList {
     }
   }
 
+  openEditDraft(report) {
+    console.log('Open edit draf', report);
+  }
+
   toggleReport(report) {
 
     if (report.selected) {
@@ -155,5 +160,50 @@ export class VisitReportList {
 
   isAnyReportSelected() {
     return this.selectedReportsCount > 0;
+  }
+
+  presentActionList() {
+    let buttons = [
+      {
+        text: 'Selecionar todos',
+        handler: () => {
+          this.selectAll();
+        }
+      },
+    ];
+
+    if (this.isAnyReportSelected()) {
+      buttons.push({
+        text: 'Desmarcar todos',
+        handler: () => {
+          this.deselectAll();
+        }
+      });
+    }
+
+    let actionSheet = ActionSheet.create({
+      cssClass: 'action-sheets-basic-page',
+      buttons: buttons
+    });
+
+    this.nav.present(actionSheet);
+  }
+
+  selectAll() {
+    for (let i = 0; i < this.visitsReport.length; i++) {
+
+      if (!this.visitsReport[i].selected) {
+        this.toggleReport(this.visitsReport[i]);
+      }
+    }
+  }
+
+  deselectAll() {
+    for (let i = 0; i < this.visitsReport.length; i++) {
+
+      if (this.visitsReport[i].selected ) {
+        this.toggleReport(this.visitsReport[i]);
+      }
+    }
   }
 }
