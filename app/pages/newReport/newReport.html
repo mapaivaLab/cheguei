@@ -82,5 +82,13 @@
       <ion-icon name="text" item-left></ion-icon>
       <ion-textarea placeholder="Detalhe da despesa"></ion-textarea>
     </ion-item>
+    <button ion-item (click)="pickImage()" *ngIf="!newReport.image.data">
+      <ion-icon name="camera" item-left></ion-icon>
+      <ion-label>Tirar foto da nota</ion-label>
+    </button>
+    <ion-item *ngIf="newReport.image.data" class="note-image-item">
+      <ion-icon name="image" item-left></ion-icon>
+      <img src="{{newReport.image.data}}" (click)="openImageActionSheet()" />
+    </ion-item>
   </ion-list>
 </ion-content>

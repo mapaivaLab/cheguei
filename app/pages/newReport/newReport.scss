@@ -1,0 +1,27 @@
+.note-image-item {
+
+  ion-buttons {
+
+    button {
+      background: inherit;
+      box-shadow: none;
+      color: rgba(255,255,255,0.5);
+      text-shadow: 1px 1px rgba(0, 0, 0, 0.42);
+    }
+  }
+
+  img {
+    border-radius: 5px;
+  }
+}
+
+.action-sheets-basic-page {
+
+  .action-sheet-button {
+    color: #333;
+
+    ion-icon {
+      color: #444;
+    }
+  }
+}
