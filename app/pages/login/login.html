@@ -1,0 +1,32 @@
+<ion-content class="login-page">
+  <ion-slides pager>
+    <ion-slide padding class="art-box">
+       <ion-icon name="bulb" danger></ion-icon>
+      <h1><strong>Cheguei!</strong></h1>
+      <h5>O melhor app de reembolso de despesas do <strong>UNIVERSO</strong>!</h5>
+    </ion-slide>
+
+    <ion-slide padding class="art-box">
+      <ion-icon name="paper"></ion-icon>
+      <h1>Sem internet? Sem problema</h1>
+      <h5>Crie rascunhos e salve-os quando puder</h5>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-toolbar danger>
+        <ion-title>Cheguei!</ion-title>
+      </ion-toolbar>
+      <ion-list no-lines padding>
+        <ion-item>
+          <ion-icon name="contact" item-left></ion-icon>
+          <ion-input type="text" placeholder="Usuário" [(ngModel)]="authInfo.user"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="key" item-left></ion-icon>
+          <ion-input type="password" placeholder="Senha" [(ngModel)]="authInfo.pass"></ion-input>
+        </ion-item>
+        <button secondary block outline (click)="login()">LOGIN</button>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Platform, MenuController, Alert} from 'ionic-angular';
+import {ionicBootstrap, Platform, MenuController, Alert, Modal} from 'ionic-angular';
 import {StatusBar, Geolocation, Vibration} from 'ionic-native';
 
 import {AppStorage} from './core/appStorage';
@@ -7,6 +7,7 @@ import {AppStorage} from './core/appStorage';
 import {Homepage} from './pages/homepage/homepage';
 import {SettingsPage} from './pages/settings/settings';
 import {VisitReportList} from './pages/visit-report-list/visit-report-list';
+import {LoginPage} from './pages/login/login';
 
 // Global variables
 window.Storage = new AppStorage();
@@ -41,16 +42,27 @@ class MyApp {
     this.bottomPages = [
       { title: 'Configurações', component: SettingsPage, icon: 'settings' }
     ];
-
-    // make HelloIonicPage the root (or first) page
-    this.rootPage = Homepage;
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      StatusBar.styleDefault();
+      let authInfo = Storage.getAuthInfo();
 
-      this.watchLocation();
+      if (authInfo.user) {
+        this.rootPage = Homepage;
+
+        this.watchLocation();
+      } else {
+        let loginModal = Modal.create(LoginPage);
+
+        this.nav.present(loginModal);
+
+        loginModal.onDismiss(() => {
+          this.rootPage = Homepage;
+        });
+      }
+
+      StatusBar.styleDefault();
     });
   }
 

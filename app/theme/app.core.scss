@@ -10,8 +10,9 @@
 @import "../pages/homepage/homepage";
 @import "../pages/visit-report-list/visit-report-list";
 @import "../pages/newReport/newReport";
+@import "../pages/login/login";
 
-.cheguei-menu-toolbar {
+.cheguei-menu-toolbar, .logo {
   font-family: $styleFont;
 
   .toolbar-title {

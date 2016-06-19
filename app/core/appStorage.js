@@ -68,6 +68,22 @@ export class AppStorage {
     this.saveItem('drafts', drafts);
   }
 
+  getAuthInfo() {
+    let auth = this.getItem('auth');
+
+    if (!auth) {
+      auth = { user: null, pass: null };
+
+      this.saveItem('auth', auth);
+    }
+
+    return auth;
+  }
+
+  saveAuthInfo(auth) {
+    this.saveItem('auth', auth);
+  }
+
   getItem(name) {
     let item = ls.getItem(name);
 
