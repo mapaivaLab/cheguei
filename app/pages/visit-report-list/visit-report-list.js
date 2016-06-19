@@ -1,4 +1,4 @@
-import {Page, NavController, ActionSheet} from 'ionic-angular';
+import {Page, NavController, ActionSheet, Alert} from 'ionic-angular';
 import {NewReport} from '../newReport/newReport';
 
 @Page({
@@ -37,7 +37,6 @@ export class VisitReportList {
 
     this.month = this.monthList[0];
 
-    // Fill repots lists
     this.visitsReportDrafts = [
       {
         isDraft: true,
@@ -205,5 +204,29 @@ export class VisitReportList {
         this.toggleReport(this.visitsReport[i]);
       }
     }
+  }
+
+  approveReports() {
+    console.log('Approve reports');
+  }
+
+  deleteReports() {
+    let alert = Alert.create({
+      title: 'Deletar reembolsos',
+      message: "Tem certeza que deseja deletar os reembolsos?",
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Sim',
+          handler: data => {
+            console.log('Sim clicado');
+          }
+        }
+      ]
+    });
+
+    this.nav.present(alert);
   }
 }

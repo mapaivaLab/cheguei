@@ -7,10 +7,10 @@
     {{ selectedReportsCount }}
   </ion-title>
   <ion-buttons end>
-    <button>
+    <button (click)="deleteReports()">
       <ion-icon class="top-icon" name="trash" *ngIf="isAnyReportSelected()"></ion-icon>
     </button>
-    <button>
+    <button (click)="approveReports()">
       <ion-icon class="top-icon" name="checkmark-circle" *ngIf="isAnyReportSelected()"></ion-icon>
     </button>
     <button (click)="presentActionList()">
@@ -61,6 +61,10 @@
         <button secondary>
           <ion-icon name="checkmark"></ion-icon>
           Salvar
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+          Deletar
         </button>
       </ion-item-options>
     </ion-item-sliding>
