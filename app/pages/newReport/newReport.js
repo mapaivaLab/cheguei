@@ -1,4 +1,4 @@
-import {Page, NavController, Alert, ActionSheet, Platform, NavParams, Toast} from "ionic-angular";
+import {Page, NavController, Alert, ActionSheet, Platform, NavParams, Toast, Loading} from "ionic-angular";
 import {Camera} from 'ionic-native';
 
 import {Draft} from '../../core/draft';
@@ -92,6 +92,15 @@ export class NewReport {
   saveReport() {
 
     if (this.newReport.horaChegada && this.newReport.horaSaida) {
+      let loading = Loading.create({
+        content: "Salvando reembolso, aguarde..."
+      });
+
+      loading.onDismiss(() => {
+        this.nav.pop();
+      });
+
+      this.nav.present(loading);
 
       switch (this.saveMode) {
         case SaveMode.CREATE:
@@ -102,7 +111,9 @@ export class NewReport {
           break;
       }
 
-      this.nav.pop();
+      setTimeout(() => {
+        loading.dismiss();
+      }, 3000);
     } else {
 
       switch (this.saveMode) {
