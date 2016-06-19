@@ -1,7 +1,7 @@
 <ion-navbar *navbar danger>
   <ion-title>Novo Reembolso</ion-title>
   <ion-buttons end>
-    <button royal>
+    <button royal (click)="saveReport()">
       <ion-icon name="checkmark"></ion-icon>
     </button>
   </ion-buttons>
@@ -11,17 +11,17 @@
   <ion-list no-lines>
     <ion-item>
       <ion-icon name="home" item-left></ion-icon>
-      <ion-input type="text" placeholder="Cilente"></ion-input>
+      <ion-input type="text" placeholder="Cilente" [(ngModel)]="newReport.cliente"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="list-box" item-left></ion-icon>
       <ion-input type="text" placeholder="30" placeholder="Descrição"
-        [(ngModel)]="newReport.description"></ion-input>
+        [(ngModel)]="newReport.descricao"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="calendar" item-left></ion-icon>
       <ion-label>Data</ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="newReport.date"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="newReport.data"></ion-datetime>
     </ion-item>
   </ion-list>
 
@@ -30,22 +30,26 @@
     <ion-item>
       <ion-icon name="sunny" item-left></ion-icon>
       <ion-label>Chegada</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"
+        [(ngModel)]="newReport.horaChegada"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-icon name="moon" item-left></ion-icon>
       <ion-label>Saída</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"
+        [(ngModel)]="newReport.horaSaida"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-icon name="beer" item-left></ion-icon>
       <ion-label>Tempo improdutivo</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"
+        [(ngModel)]="newReport.tempoImprodutivo"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-icon name="time" item-left></ion-icon>
       <ion-label>Intervalo de espera</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"
+        [(ngModel)]="newReport.intervaloEspera"></ion-datetime>
     </ion-item>
   </ion-list>
 
@@ -54,7 +58,7 @@
   <ion-list no-lines>
     <ion-item>
       <ion-icon name="text" item-left></ion-icon>
-      <ion-textarea placeholder="Detalhe"></ion-textarea>
+      <ion-textarea placeholder="Detalhe" [(ngModel)]="newReport.detalheVisita"></ion-textarea>
     </ion-item>
   </ion-list>
 
@@ -63,24 +67,25 @@
   <ion-list no-lines>
     <ion-item>
       <ion-icon name="restaurant" item-left></ion-icon>
-      <ion-input type="number" placeholder="Refeição" [(ngModel)]="newReport.meal"></ion-input>
+      <ion-input type="number" placeholder="Refeição" [(ngModel)]="newReport.refeicao"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="cash" item-left></ion-icon>
       <ion-input type="number" placeholder="Outros Gastos"
-        [(ngModel)]="newReport.othersExpenses"></ion-input>
+        [(ngModel)]="newReport.outrosGastos"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="car" item-left></ion-icon>
-      <ion-input type="number" placeholder="Quilometragem (KM)"></ion-input>
+      <ion-input type="number" placeholder="Quilometragem (KM)"
+        [(ngModel)]="newReport.quilometragem"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="restaurant" item-left></ion-icon>
-      <ion-input type="number" placeholder="Pedágio"></ion-input>
+      <ion-input type="number" placeholder="Pedágio" [(ngModel)]="newReport.pedagio"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="text" item-left></ion-icon>
-      <ion-textarea placeholder="Detalhe da despesa"></ion-textarea>
+      <ion-textarea placeholder="Detalhe da despesa" [(ngModel)]="newReport.detalheDespesa"></ion-textarea>
     </ion-item>
     <button ion-item (click)="pickImage()" *ngIf="!newReport.image.data">
       <ion-icon name="camera" item-left></ion-icon>

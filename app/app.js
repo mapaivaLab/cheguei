@@ -11,6 +11,7 @@ import {VisitReportList} from './pages/visit-report-list/visit-report-list';
 // Global variables
 window.Storage = new AppStorage();
 window.CONFIGS = Storage.getConfigs();
+window.VisitsReportDrafts = Storage.getVisitsReportDrafts();
 
 @Component({
   templateUrl: 'build/app.html',

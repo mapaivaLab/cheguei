@@ -43,8 +43,8 @@
   <ion-item-divider light>Reembolsos</ion-item-divider>
   <ion-list no-lines>
     <!-- Draft List -->
-    <ion-item-sliding>
-      <button ion-item class="report draft" *ngFor="let v of visitsReportDrafts" (click)="openEditDraft(v)">
+    <ion-item-sliding *ngFor="let v of visitsReportDrafts">
+      <button ion-item class="report draft" (click)="openEditDraft(v)">
         <div class="column">
           <div class="draft-avatar" item-left>
             <ion-icon name="paper"></ion-icon>
@@ -62,7 +62,7 @@
           <ion-icon name="checkmark"></ion-icon>
           Salvar
         </button>
-        <button danger>
+        <button danger (click)="deleteDraft(v)">
           <ion-icon name="trash"></ion-icon>
           Deletar
         </button>

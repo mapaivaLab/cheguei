@@ -48,6 +48,26 @@ export class AppStorage {
     this.saveItem('configs', configs);
   }
 
+  getVisitsReportDrafts() {
+    let drafts = this.getItem('drafts');
+
+    if (!drafts) {
+      drafts = [];
+
+      this.saveItem('drafts', drafts);
+    }
+
+    for (let i = 0; i < drafts.length; i++) {
+      drafts[i].data = new Date(drafts[i].data);
+    }
+
+    return drafts;
+  }
+
+  saveVisitsReportDrafts(drafts) {
+    this.saveItem('drafts', drafts);
+  }
+
   getItem(name) {
     let item = ls.getItem(name);
 

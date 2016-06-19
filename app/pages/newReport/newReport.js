@@ -1,5 +1,6 @@
 import {Page, NavController, Alert, ActionSheet, Platform} from "ionic-angular";
 import * as dateformatAll from 'dateformat';
+import * as uuid from 'node-uuid';
 import {Camera} from 'ionic-native';
 
 @Page({
@@ -17,10 +18,12 @@ export class NewReport {
     let dateformat = dateformatAll.default;
 
     this.newReport = {
-      description: CONFIGS.defaultValues.reportDescription,
-      date: dateformat(new Date(), 'yyyy-mm-dd'),
-      meal: CONFIGS.defaultValues.launchPrice,
-      othersExpenses: CONFIGS.defaultValues.transportPrice,
+      cliente: null,
+      descricao: CONFIGS.defaultValues.reportDescription,
+      data: dateformat(new Date(), 'yyyy-mm-dd'),
+      refeicao: CONFIGS.defaultValues.launchPrice,
+      outrosGastos: CONFIGS.defaultValues.transportPrice,
+      duracao: null,
       image: {
         title: 'Imagem de nota de reembolso',
         data: null
@@ -69,5 +72,21 @@ export class NewReport {
     });
 
     this.nav.present(actionSheet);
+  }
+
+  saveReport() {
+
+    if (this.newReport.horaChegada && this.newReport.horaSaida) {
+      console.log('Salva relatório no banco');
+    } else {
+      this.newReport.data = new Date(this.newReport.data);
+      this.newReport.id_draft = uuid.v4();
+
+      VisitsReportDrafts.push(this.newReport);
+
+      Storage.saveVisitsReportDrafts(VisitsReportDrafts);
+    }
+
+    this.nav.pop();
   }
 }

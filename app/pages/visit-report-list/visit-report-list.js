@@ -37,27 +37,7 @@ export class VisitReportList {
 
     this.month = this.monthList[0];
 
-    this.visitsReportDrafts = [
-      {
-        isDraft: true,
-        cliente: "CODIT",
-        data: new Date("2016-06-02T00:00:00-03:00"),
-        descricao: "Dia de trabalho",
-        detalheDespesa: "Outros gastos = transporte",
-        detalheVisita: "",
-        duracao: "1900-01-01T09:14:00-03:06",
-        horaChegada: new Date("1900-01-01T08:02:00-03:06"),
-        horaSaida: new Date("1900-01-01T17:16:00-03:06"),
-        id_relatorioVisita:"xD20160602H201725976R000000080",
-        intervaloEspera: "1900-01-01T00:00:00-03:06",
-        outrosGastos: "7.6",
-        pedagio: "0.0",
-        quilometragem: "0.0",
-        refeicao: "9.5",
-        tempoImprodutivo: "1900-01-01T00:30:00-03:06",
-        usuarioInsercao: "Matheus Paiva"
-      }
-    ];
+    this.visitsReportDrafts = VisitsReportDrafts;
 
     this.visitsReport = [
       {
@@ -222,6 +202,35 @@ export class VisitReportList {
           text: 'Sim',
           handler: data => {
             console.log('Sim clicado');
+          }
+        }
+      ]
+    });
+
+    this.nav.present(alert);
+  }
+
+  // Drafts
+
+  deleteDraft(report) {
+    let alert = Alert.create({
+      title: 'Deletar rascunho',
+      message: "Tem certeza que deseja deletar o rascunho?",
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Sim',
+          handler: data => {
+
+            for (var i = 0; i < VisitsReportDrafts.length; i++) {
+
+              if (VisitsReportDrafts[i].id_draft = report.id_draft) {
+                VisitsReportDrafts.splice(i, 1);
+                Storage.saveVisitsReportDrafts(VisitsReportDrafts);
+              }
+            }
           }
         }
       ]
