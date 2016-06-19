@@ -1,34 +1,49 @@
-import {Page, NavController, Alert, ActionSheet, Platform} from "ionic-angular";
-import * as dateformatAll from 'dateformat';
-import * as uuid from 'node-uuid';
+import {Page, NavController, Alert, ActionSheet, Platform, NavParams} from "ionic-angular";
 import {Camera} from 'ionic-native';
+
+import {Draft} from '../../core/draft';
+
+import * as dateformatAll from 'dateformat';
+
+// Enum to save report method
+let SaveMode = {
+  CREATE: 0,
+  UPDATE: 1
+};
 
 @Page({
   templateUrl: 'build/pages/newReport/newReport.html'
 })
 export class NewReport {
   static get parameters() {
-    return [[NavController], [Platform]];
+    return [[NavController], [Platform], [NavParams]];
   }
 
-  constructor(nav, platform) {
+  constructor(nav, platform, navParams) {
     this.nav = nav;
     this.platform = platform;
 
     let dateformat = dateformatAll.default;
 
-    this.newReport = {
-      cliente: null,
-      descricao: CONFIGS.defaultValues.reportDescription,
-      data: dateformat(new Date(), 'yyyy-mm-dd'),
-      refeicao: CONFIGS.defaultValues.launchPrice,
-      outrosGastos: CONFIGS.defaultValues.transportPrice,
-      duracao: null,
-      image: {
-        title: 'Imagem de nota de reembolso',
-        data: null
-      }
-    };
+    if (navParams.get('report')) {
+      this.saveMode = SaveMode.UPDATE;
+      this.newReport = navParams.get('report');
+    } else {
+      this.saveMode = SaveMode.CREATE;
+
+      this.newReport = {
+        cliente: null,
+        descricao: CONFIGS.defaultValues.reportDescription,
+        data: dateformat(new Date(), 'yyyy-mm-dd'),
+        refeicao: CONFIGS.defaultValues.launchPrice,
+        outrosGastos: CONFIGS.defaultValues.transportPrice,
+        duracao: null,
+        image: {
+          title: 'Imagem de nota de reembolso',
+          data: null
+        }
+      };
+    }
   }
 
   pickImage() {
@@ -79,12 +94,15 @@ export class NewReport {
     if (this.newReport.horaChegada && this.newReport.horaSaida) {
       console.log('Salva relatório no banco');
     } else {
-      this.newReport.data = new Date(this.newReport.data);
-      this.newReport.id_draft = uuid.v4();
 
-      VisitsReportDrafts.push(this.newReport);
-
-      Storage.saveVisitsReportDrafts(VisitsReportDrafts);
+      switch (this.saveMode) {
+        case SaveMode.CREATE:
+          Draft.createDraft(this.newReport);
+          break;
+        case SaveMode.UPDATE:
+          Draft.updateDraft(this.newReport);
+          break;
+      }
     }
 
     this.nav.pop();

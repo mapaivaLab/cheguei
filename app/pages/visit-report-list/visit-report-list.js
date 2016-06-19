@@ -1,6 +1,8 @@
 import {Page, NavController, ActionSheet, Alert} from 'ionic-angular';
 import {NewReport} from '../newReport/newReport';
 
+import {Draft} from '../../core/draft';
+
 @Page({
   templateUrl: 'build/pages/visit-report-list/visit-report-list.html'
 })
@@ -105,8 +107,8 @@ export class VisitReportList {
     return parseFloat(report.outrosGastos) + parseFloat(report.refeicao);
   }
 
-  openNewReportPage() {
-    this.nav.push(NewReport);
+  openNewReportPage(params) {
+    this.nav.push(NewReport, params);
   }
 
   openEditPage(report) {
@@ -116,12 +118,12 @@ export class VisitReportList {
     } else if (this.isAnyReportSelected()) {
       this.toggleReport(report);
     } else {
-      console.log('Open edit page', report);
+      this.openNewReportPage({ report: report });
     }
   }
 
   openEditDraft(report) {
-    console.log('Open edit draf', report);
+    this.openNewReportPage({ report: report });
   }
 
   toggleReport(report) {
@@ -223,14 +225,7 @@ export class VisitReportList {
         {
           text: 'Sim',
           handler: data => {
-
-            for (var i = 0; i < VisitsReportDrafts.length; i++) {
-
-              if (VisitsReportDrafts[i].id_draft = report.id_draft) {
-                VisitsReportDrafts.splice(i, 1);
-                Storage.saveVisitsReportDrafts(VisitsReportDrafts);
-              }
-            }
+            Draft.deleteDraft(report);
           }
         }
       ]
