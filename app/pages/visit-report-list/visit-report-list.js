@@ -104,7 +104,17 @@ export class VisitReportList {
   }
 
   sumReportCost(report) {
-    return parseFloat(report.outrosGastos) + parseFloat(report.refeicao);
+    let amount = 0;
+
+    if (report.outrosGastos) {
+      amount += parseFloat(report.outrosGastos);
+    }
+
+    if (report.refeicao) {
+      amount += parseFloat(report.refeicao);
+    }
+
+    return amount;
   }
 
   openNewReportPage(params) {
