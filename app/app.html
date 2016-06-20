@@ -14,6 +14,9 @@
       <button ion-item *ngFor="let p of bottomPages" (click)="openPage(p)" bottom>
         <ion-icon name="{{ p.icon }}" item-left></ion-icon> {{p.title}}
       </button>
+      <button ion-item (click)="logout()" bottom>
+        <ion-icon name="log-out" item-left></ion-icon> Sair
+      </button>
     </ion-list>
   </ion-content>
 

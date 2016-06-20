@@ -53,17 +53,28 @@ class MyApp {
 
         this.watchLocation();
       } else {
-        let loginModal = Modal.create(LoginPage);
-
-        this.nav.present(loginModal);
-
-        loginModal.onDismiss(() => {
-          this.rootPage = Homepage;
-        });
+        this.showLoginModal();
       }
 
       StatusBar.styleDefault();
     });
+  }
+
+  showLoginModal() {
+    let loginModal = Modal.create(LoginPage);
+
+    this.nav.present(loginModal);
+
+    loginModal.onDismiss(() => {
+      this.rootPage = Homepage;
+    });
+  }
+
+  logout() {
+    Storage.saveAuthInfo({ user: null, pass: null });
+
+    this.menu.close();
+    this.showLoginModal();
   }
 
   openPage(page) {
