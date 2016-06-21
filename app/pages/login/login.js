@@ -15,25 +15,32 @@ export class LoginPage {
       user: null,
       pass: null
     };
+
+    this.invalidLogin = false;
   }
 
   login() {
 
     if (this.authInfo.user && this.authInfo.pass) {
-      let loading = Loading.create({
-        content: "Autenticando..."
-      });
 
-      loading.onDismiss(() => {
-        this.viewCtrl.dismiss();
-      });
+      if (this.authInfo.user == 'matheus.paiva') {
+        let loading = Loading.create({
+          content: "Autenticando..."
+        });
 
-      this.nav.present(loading);
+        loading.onDismiss(() => {
+          this.viewCtrl.dismiss();
+        });
 
-      setTimeout(() => {
-        Storage.saveAuthInfo(this.authInfo);
-        loading.dismiss();
-      }, 3000);
+        this.nav.present(loading);
+
+        setTimeout(() => {
+          Storage.saveAuthInfo(this.authInfo);
+          loading.dismiss();
+        }, 3000);
+      } else {
+        this.invalidLogin = true;
+      }
     }
   }
 }

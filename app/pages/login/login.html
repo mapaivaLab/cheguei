@@ -17,6 +17,7 @@
         <ion-title>Cheguei!</ion-title>
       </ion-toolbar>
       <ion-list no-lines padding>
+        <button danger outline block *ngIf="invalidLogin">Usuário ou senha incorretos</button>
         <ion-item class="input">
             <ion-label stacked>Usuário</ion-label>
             <ion-input type="text" required [(ngModel)]="authInfo.user"></ion-input>
