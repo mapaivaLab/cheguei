@@ -33,6 +33,9 @@
         },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "cheguei"
         }
     },
     "dependent_plugins": {

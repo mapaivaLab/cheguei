@@ -33,6 +33,9 @@
         },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         }
     },
     "dependent_plugins": {
