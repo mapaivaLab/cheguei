@@ -16,6 +16,32 @@ window.Storage = new AppStorage();
 window.CONFIGS = Storage.getConfigs();
 window.VisitsReportDrafts = Storage.getVisitsReportDrafts();
 
+/** Converts numeric degrees to radians */
+if (typeof(Number.prototype.toRad) === "undefined") {
+  Number.prototype.toRad = function() {
+    return this * Math.PI / 180;
+  }
+}
+
+/**
+ * @private
+ * Returns a distance difference between two lat, logn coordinates in meters
+ * @return {Number}
+*/
+function distance(lon1, lat1, lon2, lat2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2-lat1).toRad();
+  const dLon = (lon2-lon1).toRad();
+
+  let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+          Math.sin(dLon/2) * Math.sin(dLon/2);
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  let d = R * c; // Distance in km
+
+  return d * 1000;
+}
+
 @Component({
   templateUrl: 'build/app.html',
   queries: {
@@ -54,7 +80,6 @@ class MyApp {
         this.rootPage = Homepage;
 
         this.watchLocation();
-        this.notificationTest();
       } else {
         this.showLoginModal();
       }
@@ -88,21 +113,31 @@ class MyApp {
   }
 
   watchLocation() {
-    // Starts Geolocation watcher
-    let watch = Geolocation.watchPosition();
 
-    // Notification Flag
-    let canNotificate = true;
+    if (CONFIGS.notificationRole.geolocalization && CONFIGS.notificationRole.geolocConfig.lat
+        && CONFIGS.notificationRole.geolocConfig.lng) {
+      // Start Geolocation watcher
+      let watch = Geolocation.watchPosition();
 
-    watch.subscribe((data) => {
-      console.log(data.coords);
+      // Notification Flag
+      let canNotificate = true;
 
-      if (data.coords.latitude < -22 && data.coords.longitude < -45 && canNotificate) {
-        // this.doConfirm();
+      watch.subscribe((data) => {
+        let dDistance = distance(CONFIGS.notificationRole.geolocConfig.lng, CONFIGS.notificationRole.geolocConfig.lat,
+          data.coords.longitude, data.coords.latitude);
 
-        canNotificate = false;
-      }
-    });
+        console.log(data.coords);
+        console.log('Distance', dDistance);
+
+        if (dDistance < data.coords.accuracy && canNotificate) {
+          this.notificationTest();
+
+          canNotificate = false;
+        }
+      });
+    } else {
+      console.log('No geolocConfig set');
+    }
   }
 
   doConfirm() {
