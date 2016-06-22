@@ -1,0 +1,18 @@
+<ion-navbar *navbar danger>
+  <ion-title>Aprovar reembolsos</ion-title>
+  <ion-buttons end>
+    <button royal (click)="approveReport()">
+      <ion-icon name="checkmark"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content>
+  <ion-list no-lines>
+    <ion-item>
+      <ion-icon name="calendar" item-left></ion-icon>
+      <ion-label>Data de aprovação</ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="approveDate"></ion-datetime>
+    </ion-item>
+  </ion-list>
+</ion-content>

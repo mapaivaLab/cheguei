@@ -1,5 +1,6 @@
 import {Page, NavController, ActionSheet, Alert, Toast} from 'ionic-angular';
 import {NewReport} from '../newReport/newReport';
+import {ApproveReport} from '../approveReport/approveReport';
 
 import {Draft} from '../../core/draft';
 
@@ -198,10 +199,6 @@ export class VisitReportList {
     }
   }
 
-  approveReports() {
-    console.log('Approve reports');
-  }
-
   deleteReports() {
     let alert = Alert.create({
       title: 'Deletar reembolsos',
@@ -220,6 +217,21 @@ export class VisitReportList {
     });
 
     this.nav.present(alert);
+  }
+
+  openApproveReportsPage() {
+    let params = {
+      reports: []
+    };
+
+    for (let i = 0; i < this.visitsReport.length; i++) {
+
+      if (this.visitsReport[i].selected) {
+        params.reports.push(this.visitsReport[i]);
+      }
+    }
+
+    this.nav.push(ApproveReport, params);
   }
 
   // Drafts
