@@ -9,6 +9,8 @@ import {SettingsPage} from './pages/settings/settings';
 import {VisitReportList} from './pages/visit-report-list/visit-report-list';
 import {LoginPage} from './pages/login/login';
 
+import {LocalNotifications} from 'ionic-native';
+
 // Global variables
 window.Storage = new AppStorage();
 window.CONFIGS = Storage.getConfigs();
@@ -52,6 +54,7 @@ class MyApp {
         this.rootPage = Homepage;
 
         this.watchLocation();
+        this.notificationTest();
       } else {
         this.showLoginModal();
       }
@@ -125,6 +128,18 @@ class MyApp {
     });
 
     this.nav.present(confirm);
+  }
+
+  notificationTest() {
+    // Schedule a single notification
+    LocalNotifications.schedule({
+      id: 1,
+      text: "Oloko bixu",
+      at: new Date(new Date().getTime() + 10),
+      led: "FF0000",
+      icon: "http://i.imgur.com/nL1nDYI.gif?1",
+      data: { secret: '123 Bamos a la praia' }
+    });
   }
 }
 
