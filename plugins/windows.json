@@ -22,9 +22,6 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "cheguei"
         },
-        "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "cheguei"
-        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "cheguei"
         },
@@ -35,6 +32,9 @@
             "PACKAGE_NAME": "cheguei"
         },
         "cordova-plugin-camera": {
+            "PACKAGE_NAME": "cheguei"
+        },
+        "cordova-plugin-vibration": {
             "PACKAGE_NAME": "cheguei"
         }
     },

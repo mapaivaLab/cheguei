@@ -10,9 +10,6 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
-        "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "com.ionicframework.cheguei434935"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
@@ -35,6 +32,9 @@
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
         "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.cheguei434935"
+        },
+        "cordova-plugin-vibration": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         }
     },
