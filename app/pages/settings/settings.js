@@ -36,4 +36,18 @@ export class SettingsPage {
   openSearchAddressPage() {
     this.nav.push(SearchAddress);
   }
+
+  toggleWeakDay(ev, day) {
+    let btn = ev.target.parentNode;
+
+    if (btn.className.indexOf('button-clear') > -1) {
+      btn.setAttribute('class', btn.className.replace('button-clear-secondary', 'button-secondary')
+        .replace('button-clear', 'button-default'));
+      btn.removeAttribute('clear');
+    } else {
+      btn.setAttribute('class', btn.className.replace('button-secondary', 'button-clear-secondary')
+      .replace('button-default', 'button-clear'));
+      btn.setAttribute('clear', 'true');
+    }
+  }
 }

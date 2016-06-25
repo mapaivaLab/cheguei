@@ -143,3 +143,15 @@
     }
   }
 }
+
+button.weak-day {
+  color: #FFF;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  box-shadow: none;
+}
+
+button.weak-day[clear] {
+  color: #32db64;
+}

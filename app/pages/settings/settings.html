@@ -56,6 +56,16 @@
         <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="notificationRole.hourConfig.endDayTime"></ion-datetime>
       </ion-item>
     </ion-list>
+    <ion-item>
+      <ion-icon name="calendar" item-left></ion-icon>
+      <button round secondary class="weak-day" (click)="toggleWeakDay($event, 0)">S</button>
+      <button round secondary class="weak-day" (click)="toggleWeakDay($event, 1)">T</button>
+      <button round secondary class="weak-day" (click)="toggleWeakDay($event, 2)">Q</button>
+      <button round secondary class="weak-day" (click)="toggleWeakDay($event, 3)">Q</button>
+      <button round secondary class="weak-day" (click)="toggleWeakDay($event, 4)">S</button>
+      <button round secondary class="weak-day" clear (click)="toggleWeakDay($event, 5)">S</button>
+      <button round secondary class="weak-day" clear (click)="toggleWeakDay($event, 6)">D</button>
+    </ion-item>
   </ion-list>
   <ion-item-divider light>Valores padrões</ion-item-divider>
   <ion-list no-lines>
