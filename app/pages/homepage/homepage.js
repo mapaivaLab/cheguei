@@ -3,6 +3,8 @@ import {NewReport} from '../newReport/newReport';
 
 import {Draft} from '../../core/draft';
 
+import moment from 'moment';
+
 @Page({
   templateUrl: 'build/pages/homepage/homepage.html'
 })
@@ -27,7 +29,7 @@ export class Homepage {
     this.visitsReport = [
       {
         cliente: "CODIT",
-        data: new Date("2016-06-02T00:00:00-03:00"),
+        data: moment("2016-06-02T00:00:00-03:00").toDate(),
         descricao: "Dia de trabalho",
         detalheDespesa: "Outros gastos = transporte",
         detalheVisita: "",

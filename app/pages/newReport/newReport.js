@@ -3,7 +3,7 @@ import {Camera} from 'ionic-native';
 
 import {Draft} from '../../core/draft';
 
-import * as dateformatAll from 'dateformat';
+import moment from 'moment';
 
 // Enum to save report method
 let SaveMode = {
@@ -23,18 +23,21 @@ export class NewReport {
     this.nav = nav;
     this.platform = platform;
 
-    let dateformat = dateformatAll.default;
-
     if (navParams.get('report')) {
       this.saveMode = SaveMode.UPDATE;
-      this.newReport = navParams.get('report');
+
+      let report = navParams.get('report');
+
+      report.datePicker = moment(report.data).format('YYYY-MM-DD');
+
+      this.newReport = report;
     } else {
       this.saveMode = SaveMode.CREATE;
 
       this.newReport = {
         cliente: null,
         descricao: CONFIGS.defaultValues.reportDescription,
-        data: dateformat(new Date(), 'yyyy-mm-dd'),
+        datePicker: moment().format('YYYY-MM-DD'),
         refeicao: CONFIGS.defaultValues.launchPrice,
         outrosGastos: CONFIGS.defaultValues.transportPrice,
         duracao: null,

@@ -1,6 +1,6 @@
 import {Page, NavController, Alert, NavParams, Toast, Loading} from "ionic-angular";
 
-import * as dateformatAll from 'dateformat';
+import moment from 'moment';
 
 @Page({
   templateUrl: 'build/pages/approveReport/approveReport.html'
@@ -12,10 +12,7 @@ export class ApproveReport {
 
   constructor(nav, navParams) {
     this.nav = nav;
-
-    let dateformat = dateformatAll.default;
-
-    this.approveDate = dateformat(new Date(), 'yyyy-mm-dd');
+    this.approveDate = moment().format('YYYY-MM-DD');
 
     console.log(navParams);
   }

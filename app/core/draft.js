@@ -1,10 +1,11 @@
-import * as uuid from 'node-uuid';
+import uuid from 'node-uuid';
+import moment from 'moment';
 
 class DraftUtils {
   constructor(){}
 
   createDraft(draft) {
-    draft.data = new Date(draft.data);
+    draft.data = new Date(moment(draft.datePicker).toDate());
     draft.id_draft = uuid.v1();
 
     VisitsReportDrafts.push(draft);
@@ -16,6 +17,7 @@ class DraftUtils {
     let draftInfo = this.findDraft(draft.id_draft, true);
 
     if (draftInfo.draft) {
+      draft.data = new Date(moment(draft.datePicker).toDate());
       VisitsReportDrafts[draftInfo.index] = draft;
       Storage.saveVisitsReportDrafts(VisitsReportDrafts);
     }

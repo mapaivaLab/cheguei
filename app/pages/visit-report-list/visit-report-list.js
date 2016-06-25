@@ -4,6 +4,8 @@ import {ApproveReport} from '../approveReport/approveReport';
 
 import {Draft} from '../../core/draft';
 
+import moment from 'moment';
+
 @Page({
   templateUrl: 'build/pages/visit-report-list/visit-report-list.html'
 })
@@ -45,7 +47,7 @@ export class VisitReportList {
     this.visitsReport = [
       {
         cliente: "CODIT",
-        data: new Date("2016-06-02T00:00:00-03:00"),
+        data: moment("2016-06-02T00:00:00-03:00").toDate(),
         descricao: "Dia de trabalho",
         detalheDespesa: "Outros gastos = transporte",
         detalheVisita: "",
@@ -63,7 +65,7 @@ export class VisitReportList {
       },
       {
         cliente: "CODIT",
-        data: new Date("2016-06-02T00:00:00-03:00"),
+        data: moment("2016-06-02T00:00:00-03:00").toDate(),
         descricao: "Dia de trabalho",
         detalheDespesa: "Outros gastos = transporte",
         detalheVisita: "",
@@ -81,7 +83,7 @@ export class VisitReportList {
       },
       {
         cliente: "FEST COLOR",
-        data: new Date("2016-06-02T00:00:00-03:00"),
+        data: moment("2016-06-02T00:00:00-03:00").toDate(),
         descricao: "Dia de trabalho",
         detalheDespesa: "Outros gastos = transporte",
         detalheVisita: "",
