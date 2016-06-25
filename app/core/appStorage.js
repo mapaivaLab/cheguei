@@ -28,7 +28,45 @@ export class AppStorage {
             launchTime: '12:00',
             backLaunchTime: '13:00',
             endDayTime: '17:30'
-          }
+          },
+
+          weekDay: [
+            {
+              description: 'Segunda-feira',
+              code: 'S',
+              checked: true
+            },
+            {
+              description: 'Terça-feira',
+              code: 'T',
+              checked: true
+            },
+            {
+              description: 'Quarta-feira',
+              code: 'Q',
+              checked: true
+            },
+            {
+              description: 'Quinta-feira',
+              code: 'Q',
+              checked: true
+            },
+            {
+              description: 'Sexta-feira',
+              code: 'S',
+              checked: true
+            },
+            {
+              description: 'Sábado',
+              code: 'S',
+              checked: false
+            },
+            {
+              description: 'Domingo',
+              code: 'S',
+              checked: false
+            }
+          ]
         },
 
         defaultValues: {

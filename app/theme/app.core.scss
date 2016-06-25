@@ -144,7 +144,7 @@
   }
 }
 
-button.weak-day {
+button.week-day {
   color: #FFF;
   border-radius: 50%;
   width: 35px;
@@ -152,6 +152,7 @@ button.weak-day {
   box-shadow: none;
 }
 
-button.weak-day[clear] {
+button.week-day[clear] {
   color: #32db64;
+  background: #FFF;
 }
