@@ -44,3 +44,11 @@ plugins/de**
 platforms/android
 platforms/ios
 platforms/windows
+
+# Generated icon images
+resources/android/
+resources/ios/
+resources/windows/
+
+# Png images in the assets folder
+assets/*.png
