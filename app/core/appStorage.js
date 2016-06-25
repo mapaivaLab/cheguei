@@ -63,7 +63,7 @@ export class AppStorage {
             },
             {
               description: 'Domingo',
-              code: 'S',
+              code: 'D',
               checked: false
             }
           ]

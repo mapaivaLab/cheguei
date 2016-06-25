@@ -34,9 +34,18 @@
     color: #757575 !important;
   }
 
-  .top-icon {
-    padding-right: 30px;
-    font-size: 1.7em;
+  ion-buttons {
+    .button {
+      box-shadow: none;
+    }
+
+    .button.activated {
+      background: none;
+    }
+
+    .top-icon {
+      padding-right: 30px;
+    }
   }
 }
 

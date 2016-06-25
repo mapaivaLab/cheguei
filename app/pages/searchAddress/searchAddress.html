@@ -3,7 +3,7 @@
 </ion-navbar>
 
 <ion-content>
-  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="getItems($event)" autocorrect="on"></ion-searchbar>
   <ion-list class="sub-list">
     <button ion-item *ngFor="let location of locations" (click)="saveLocation(location)">
       <ion-icon name="pin" item-left></ion-icon> {{ location.formatted_address }}

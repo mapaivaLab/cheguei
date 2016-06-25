@@ -7,11 +7,13 @@
     {{ selectedReportsCount }}
   </ion-title>
   <ion-buttons end>
-    <button (click)="deleteReports()">
-      <ion-icon class="top-icon" name="trash" *ngIf="isAnyReportSelected()"></ion-icon>
+    <button (click)="deleteReports()" *ngIf="isAnyReportSelected()"
+      class="disable-hover bar-button bar-button-default bar-button-icon-only top-icon">
+      <ion-icon name="trash"></ion-icon>
     </button>
-    <button (click)="openApproveReportsPage()">
-      <ion-icon class="top-icon" name="checkmark-circle" *ngIf="isAnyReportSelected()"></ion-icon>
+    <button (click)="openApproveReportsPage()" *ngIf="isAnyReportSelected()"
+      class="disable-hover bar-button bar-button-default bar-button-icon-only top-icon">
+      <ion-icon name="checkmark-circle"></ion-icon>
     </button>
     <button (click)="presentActionList()">
       <ion-icon name="more"></ion-icon>
