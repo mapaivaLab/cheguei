@@ -1,4 +1,4 @@
-const SERVER_URL = "http://scdt-vm1:8242/codit.afx";
+const SERVER_URL = "http://192.168.0.104:8242/codit.afx";
 
 class RequestError extends Error {
   constructor(message, name) {
@@ -64,7 +64,7 @@ export class Http {
 
     xhr.onreadystatechange = function(e) {
 
-      if (this.readyState == 4 && this.status == 200) {
+      if (this.readyState == 4) {
         let resp, err;
 
         switch (this.status) {
@@ -75,8 +75,13 @@ export class Http {
               err = new RequestError(resp['@errorMessage'], resp['@exceptionName']);
             }
             break;
+          case 404:
+            err = new RequestError(`Destino não encontrado ${this.status}`, 'HTTP404');
+            break;
+          case 500:
+            err = new RequestError(`Erro interno do servidor ${this.status}`, 'HTTP500';
+            break;
           default:
-            console.error(`Unrecognized status ${this.status}`);
             err = new RequestError(`Unrecognized status ${this.status}`, 'UnrecognizedHttpStatus');
             break;
         }
