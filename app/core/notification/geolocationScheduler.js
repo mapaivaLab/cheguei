@@ -1,6 +1,8 @@
 import {Alert} from 'ionic-angular';
 import {Geolocation, LocalNotifications} from 'ionic-native';
 
+import {DailyAlert} from './dailyAlert';
+
 /**
   * Workaround if "Number" doesn't have the "toRad" method.
  * Converts numeric degrees to radians
@@ -15,12 +17,14 @@ export class GeolocationScheduler {
 
   constructor(nav) {
     this.nav = nav;
+    this.dailyAlert = new DailyAlert(this.nav);
   }
 
   /**
    * {SchedulerInterface} start method
   */
   start() {
+    this.dailyAlert.alert();
 
     if (CONFIGS.notificationRole.geolocConfig.lat && CONFIGS.notificationRole.geolocConfig.lng) {
       let watch = Geolocation.watchPosition();

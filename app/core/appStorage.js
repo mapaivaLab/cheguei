@@ -32,38 +32,45 @@ export class AppStorage {
 
           weekDay: [
             {
-              description: 'Segunda-feira',
-              code: 'S',
-              checked: true
-            },
-            {
-              description: 'Terça-feira',
-              code: 'T',
-              checked: true
-            },
-            {
-              description: 'Quarta-feira',
-              code: 'Q',
-              checked: true
-            },
-            {
-              description: 'Quinta-feira',
-              code: 'Q',
-              checked: true
-            },
-            {
-              description: 'Sexta-feira',
-              code: 'S',
-              checked: true
-            },
-            {
-              description: 'Sábado',
-              code: 'S',
+              name: 'Domingo',
+              shortName: 'D',
+              code: 0,
               checked: false
             },
             {
-              description: 'Domingo',
-              code: 'D',
+              name: 'Segunda-feira',
+              shortName: 'S',
+              code: 1,
+              checked: true
+            },
+            {
+              name: 'Terça-feira',
+              shortName: 'T',
+              code: 2,
+              checked: true
+            },
+            {
+              name: 'Quarta-feira',
+              shortName: 'Q',
+              code: 3,
+              checked: true
+            },
+            {
+              name: 'Quinta-feira',
+              shortName: 'Q',
+              code: 4,
+              checked: true
+            },
+            {
+              name: 'Sexta-feira',
+              shortName: 'S',
+              code: 5,
+              checked: true
+            },
+            {
+              name: 'Sábado',
+              shortName: 'S',
+              code: 6,
               checked: false
             }
           ]

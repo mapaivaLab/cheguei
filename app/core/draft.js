@@ -4,6 +4,19 @@ import moment from 'moment';
 class DraftUtils {
   constructor(){}
 
+  createEmptyDraft() {
+    let draft = {
+      data: new Date(),
+      id_draft: uuid.v1()
+    };
+
+    VisitsReportDrafts.push(draft);
+
+    Storage.saveVisitsReportDrafts(VisitsReportDrafts);
+
+    return draft;
+  }
+
   createDraft(draft) {
     draft.data = new Date(moment(draft.datePicker).toDate());
     draft.id_draft = uuid.v1();

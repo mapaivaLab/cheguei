@@ -60,7 +60,7 @@
       <ion-icon name="calendar" item-left></ion-icon>
       <button round secondary class="week-day" *ngFor="let wd of notificationRole.weekDay"
         [attr.clear]="!wd.checked ? '' : null" (click)="toggleWeekDay(wd)">
-        {{ wd.code }}
+        {{ wd.shortName }}
       </button>
     </ion-item>
   </ion-list>

@@ -69,6 +69,9 @@ class MyApp {
 
     loginModal.onDismiss(() => {
       this.rootPage = Homepage;
+      this.notiService = new NotificationService(this.nav);
+
+      this.notiService.start();
     });
   }
 
