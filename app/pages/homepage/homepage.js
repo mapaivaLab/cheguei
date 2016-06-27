@@ -2,6 +2,7 @@ import {Page, NavController, Alert, Toast} from 'ionic-angular';
 import {NewReport} from '../newReport/newReport';
 
 import {Draft} from '../../core/draft';
+import {Http} from '../../core/http';
 
 import moment from 'moment';
 
@@ -15,37 +16,92 @@ export class Homepage {
 
   constructor(nav) {
     this.nav = nav;
+    this.refreshing = true;
+    this.http = new Http();
+
+    this.getVisitReports();
 
     // Fill consolidated fields
-    this.mileage = parseFloat("0.0").toFixed(2);
-    this.monthList = ["Junho/2016", "Maio/2016", "Abril/2016", "Março/2016", "Fevereiro/2016", "Janeiro/2016"];
-    this.productiveHours = parseFloat("17.516666").toFixed(2);
-    this.total = parseFloat("45.050000000000004").toFixed(2);
-    this.totalHours = parseFloat("18.683332").toFixed(2);
+    this.mileage = 0;
+    this.productiveHours = 0;
+    this.total = 0;
+    this.totalHours = 0;
 
     // Fill repots lists
     this.visitsReportDrafts = VisitsReportDrafts;
 
-    this.visitsReport = [
-      {
-        cliente: "CODIT",
-        data: moment("2016-06-02T00:00:00-03:00").toDate(),
-        descricao: "Dia de trabalho",
-        detalheDespesa: "Outros gastos = transporte",
-        detalheVisita: "",
-        duracao: "1900-01-01T09:14:00-03:06",
-        horaChegada: "1900-01-01T08:02:00-03:06",
-        horaSaida:"1900-01-01T17:16:00-03:06",
-        id_relatorioVisita:"xD20160602H201725976R000000080",
-        intervaloEspera: "1900-01-01T00:00:00-03:06",
-        outrosGastos: "55.6",
-        pedagio: "0.0",
-        quilometragem: "0.0",
-        refeicao: "8",
-        tempoImprodutivo: "1900-01-01T00:30:00-03:06",
-        usuarioInsercao: "Matheus Paiva"
+    this.visitsReport = [];
+  }
+
+  getVisitReports() {
+    let authInfo = Storage.getAuthInfo();
+    let params = new Map();
+
+    params.set('user', authInfo.user);
+    params.set('month', `${this.getMonth()}/${moment().year()}`);
+
+    this.http.get('crm.visitsReport/getVisitsReport', {
+      params: params,
+      needAuth: true,
+      handler: (resp, err) => {
+    
+        if (err) {
+          const failureToast = Toast.create({
+            message: `Erro buscando reembolsos. ${err.message}`,
+            duration: 5000,
+            showCloseButton: true,
+            closeButtonText: 'Ok'
+          });
+
+          this.nav.present(failureToast);
+        } else {
+          // Fill consolidated fields
+          this.mileage = parseFloat(resp.mileage).toFixed(2);
+          this.productiveHours = parseFloat(resp.productiveHours).toFixed(2);
+          this.total = parseFloat(resp.total).toFixed(2);
+          this.totalHours = parseFloat(resp.totalHours).toFixed(2);
+
+          this.visitsReport = resp.visitsReport;
+        }
+
+        this.refreshing = false;
       }
-    ];
+    });
+
+    this.getMonth();
+  }
+
+  getMonth(){
+    let monthNum = moment().month();
+
+    switch (monthNum) {
+      case 0:
+        return 'Janeiro';
+      case 1:
+        return 'Fevereiro';
+      case 2:
+        return 'Março';
+      case 3:
+        return 'Abril';
+      case 4:
+        return 'Maio';
+      case 5:
+        return 'Junho';
+      case 6:
+        return 'Julho';
+      case 7:
+        return 'Agosto';
+      case 8:
+        return 'Setembro';
+      case 9:
+        return 'Outubro';
+      case 10:
+        return 'Novembro';
+      case 11:
+        return 'Dezembro';
+      default:
+        return '';
+    }
   }
 
   sumReportCost(report) {
@@ -59,7 +115,11 @@ export class Homepage {
       amount += parseFloat(report.refeicao);
     }
 
-    return amount;
+    return amount.toFixed(2);
+  }
+
+  prettifyDate(date) {
+    return moment(date).format('DD/MM/YYYY');
   }
 
   openNewReportPage(params) {

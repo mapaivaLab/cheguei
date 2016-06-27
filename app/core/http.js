@@ -13,7 +13,12 @@ export class Http {
   constructor() {}
 
   get(URL, opts = {}) {
-    this._request('GET', URL, opts);
+
+    if (opts.needAuth) {
+      this._requestAuth('GET', URL, opts);
+    } else {
+      this._request('GET', URL, opts);
+    }
   }
 
   put(method, URL, userServerURL = true) {
@@ -44,9 +49,9 @@ export class Http {
     }
 
     let i = 1;
+    let me = this;
 
     for (var [key, value] of opts.params.entries()) {
-      console.log(key + " = " + value);
       queryParams = queryParams.concat(key).concat('=').concat(value);
 
       if (i < opts.params.size) {
@@ -79,19 +84,53 @@ export class Http {
             err = new RequestError(`Destino não encontrado ${this.status}`, 'HTTP404');
             break;
           case 500:
-            err = new RequestError(`Erro interno do servidor ${this.status}`, 'HTTP500';
+            err = new RequestError(`Erro interno do servidor ${this.status}`, 'HTTP500');
             break;
           default:
             err = new RequestError(`Unrecognized status ${this.status}`, 'UnrecognizedHttpStatus');
             break;
         }
 
-        if (opts.handler && typeof opts.handler == 'function') {
-          opts.handler.call(this, resp, err);
-        }
+        me._invokeHanlder(opts.handler, resp, err);
       }
     };
 
     xhr.send();
+  }
+
+  _requestAuth(method, URL, opts) {
+    let params = new Map();
+
+    let authInfo = Storage.getAuthInfo();
+
+    if (!authInfo.user || !authInfo.pass) {
+      this._invokeHanlder(opts.handler, null, new RequestError('Nenhum usuário ativo encontrado para a aplicação', 'NoUser'));
+    } else {
+      params.set('userName', authInfo.user);
+      params.set('password', authInfo.pass);
+
+      this.get('core.sec.auth/logon', {
+        params: params,
+        handler: (resp, err) => {
+
+          if (err) {
+            this._invokeHanlder(opts.handler, resp, err);
+          } else {
+            opts.params = opts.params || new Map();
+
+            opts.params.set('id_session', resp['@id_session']);
+
+            this._request(method, URL, opts);
+          }
+        }
+      });
+    }
+  }
+
+  _invokeHanlder(handler, resp, err) {
+
+    if (handler && typeof handler == 'function') {
+      handler.call(this, resp, err);
+    }
   }
 }
