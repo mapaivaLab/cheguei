@@ -7,13 +7,13 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.cheguei434935"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
-        "cordova-plugin-geolocation": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.cheguei434935"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
         "cordova-plugin-splashscreen": {
@@ -22,19 +22,16 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.cheguei434935"
-        },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
-        "de.appplant.cordova.plugin.local-notification": {
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         },
-        "cordova-plugin-vibration": {
+        "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.cheguei434935"
         }
     },

@@ -82,27 +82,4 @@ export class GeolocationScheduler {
       this.doConfirm(notification);
     });
   }
-
-  doConfirm(notification) {
-    let confirm = Alert.create({
-      title: `Notificação (${notification.id})`,
-      message: 'Chegando em casa Jhow?',
-      buttons: [
-        {
-          text: 'Não',
-          handler: () => {
-            console.log('Disagree clicked');
-          }
-        },
-        {
-          text: 'Sim',
-          handler: () => {
-            console.log('Agree clicked');
-          }
-        }
-      ]
-    });
-
-    this.nav.present(confirm);
-  }
 }

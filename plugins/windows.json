@@ -7,43 +7,40 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "Cheguei!"
+        },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
         },
         "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "cheguei"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
         },
         "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
         },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "cheguei"
-        },
-        "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "cheguei"
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "Cheguei!"
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "cheguei"
-        },
         "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "cheguei"
+            "PACKAGE_NAME": "Cheguei!"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "Cheguei!"
         }
     }
 }
