@@ -1,4 +1,5 @@
 import {Page, NavController} from "ionic-angular";
+import {Http} from '../../core/http';
 
 @Page({
   templateUrl: 'build/pages/searchAddress/searchAddress.html'
@@ -16,6 +17,8 @@ export class SearchAddress {
 
     // Locations list
     this.locations = [];
+
+    this.http = new Http();
   }
 
   getItems(searchbar) {
@@ -26,29 +29,26 @@ export class SearchAddress {
       return;
     }
 
-    if (q.length > 3) {
+    if (q.length > 4) {
       this.getLocations(q);
     }
   }
 
   getLocations(query) {
-    var xhr = new XMLHttpRequest();
-    var me = this;
+    let params = new Map();
 
-    xhr.open('GET', `https://maps.googleapis.com/maps/api/geocode/json?address=${query.replace(' ', '+')}`);
+    params.set('address', query.replace(' ', '+'));
 
-    xhr.onreadystatechange = function(e) {
-
-      if (this.readyState == 4 && this.status == 200) {
-        var resp = JSON.parse(this.responseText);
+    this.http.get('https://maps.googleapis.com/maps/api/geocode/json', {
+      params: params,
+      useServerURL: false,
+      handler: (resp) => {
 
         if (resp.status == 'OK') {
-          me.locations = resp.results;
+          this.locations = resp.results;
         }
       }
-    };
-
-    xhr.send();
+    });
   }
 
   saveLocation(location) {

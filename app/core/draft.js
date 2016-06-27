@@ -7,7 +7,16 @@ class DraftUtils {
   createEmptyDraft() {
     let draft = {
       data: new Date(),
-      id_draft: uuid.v1()
+      id_draft: uuid.v1(),
+      cliente: null,
+      descricao: CONFIGS.defaultValues.reportDescription,
+      refeicao: CONFIGS.defaultValues.launchPrice,
+      outrosGastos: CONFIGS.defaultValues.transportPrice,
+      duracao: null,
+      image: {
+        title: 'Imagem de nota de reembolso',
+        data: null
+      }
     };
 
     VisitsReportDrafts.push(draft);

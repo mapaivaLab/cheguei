@@ -52,4 +52,14 @@
   ion-item.input.input-has-focus::after {
     border-color: #387ef5;
   }
+
+  .error-box {
+    border: 1px solid #e93a3a;
+    color: #e93a3a;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    font-family: $styleFont;
+  }
 }

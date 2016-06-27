@@ -10,6 +10,8 @@ import {SettingsPage} from './pages/settings/settings';
 import {VisitReportList} from './pages/visit-report-list/visit-report-list';
 import {LoginPage} from './pages/login/login';
 
+import {Http} from './core/http';
+
 // Global variables
 window.Storage = new AppStorage();
 window.CONFIGS = Storage.getConfigs();
