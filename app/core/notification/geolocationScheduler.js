@@ -24,7 +24,6 @@ export class GeolocationScheduler {
    * {SchedulerInterface} start method
   */
   start() {
-    this.dailyAlert.alert();
 
     if (CONFIGS.notificationRole.geolocConfig.lat && CONFIGS.notificationRole.geolocConfig.lng) {
       let watch = Geolocation.watchPosition();

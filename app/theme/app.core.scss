@@ -65,7 +65,8 @@
 }
 
 .report {
-  border-bottom: 1px solid #DDD !important;
+  // border-bottom: 1px solid #DDD !important;
+  border-right: 8px solid #eacf6b;
 
   .avatar {
     background: #6dcc2a;
@@ -119,6 +120,8 @@
 
 .selected-report {
   @extend .report;
+
+  border-right: 8px solid #6dcc2a !important;
 
   background: #ebf2ff;
 

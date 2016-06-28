@@ -44,7 +44,7 @@ export class Homepage {
       params: params,
       needAuth: true,
       handler: (resp, err) => {
-    
+
         if (err) {
           const failureToast = Toast.create({
             message: `Erro buscando reembolsos. ${err.message}`,
@@ -71,7 +71,7 @@ export class Homepage {
     this.getMonth();
   }
 
-  getMonth(){
+  getMonth() {
     let monthNum = moment().month();
 
     switch (monthNum) {

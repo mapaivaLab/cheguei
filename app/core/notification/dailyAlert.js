@@ -16,9 +16,15 @@ export class DailyAlert {
   constructor(nav) {
     this.nav = nav;
     this.dailyDraft = this.checkPreviouslyDailyDraft();
+    this.delayedNotification = false;
 
-    if (this.canNotify() && !this.dailyDraft) {
-      this.createDailyDraft();
+    if (this.canNotify()) {
+
+      if (!this.dailyDraft) {
+        this.createDailyDraft();
+      }
+
+      this.startWatchDog();
     }
   }
 
@@ -34,7 +40,18 @@ export class DailyAlert {
       }
     }
 
-    return canNotify;
+    return canNotify && !this.alerting && !this.delayedNotification;
+  }
+
+  startWatchDog() {
+
+    this.watchDog = setInterval(() => {
+      this.alert();
+    }, 3000); // Each 3 seconds
+  }
+
+  stopWatchDog() {
+    clearInterval(this.watchDog);
   }
 
   checkPreviouslyDailyDraft() {
@@ -69,6 +86,8 @@ export class DailyAlert {
   alert() {
 
     if (this.canNotify()) {
+      this.alerting = true;
+
       let time = moment.duration(parseInt(moment().format('HH')), 'hours')
         .add(parseInt(moment().format('MM')), 'minutes');
 
@@ -125,17 +144,25 @@ export class DailyAlert {
     this._popAlert('Bom dia!',
       `Chegou no trabalho?`,
       [
-        { text: 'Ainda não' },
+        {
+          text: 'Ainda não',
+          handler: () => {
+            this.alerting = false;
+            this._delayNotification();
+          }
+        },
         {
           text: 'Cheguei!',
           handler: () => {
-            this.dailyDraft.draft.horaChegada = new Date().toISOString();
+            this.dailyDraft.draft.horaChegada = moment().format();
 
             Draft.updateDraft(this.dailyDraft.draft);
 
             this.dailyDraft.mourningNotification = true;
 
             Storage.saveItem('dailyDraft', this.dailyDraft);
+
+            this.alerting = false;
           }
         }
       ]
@@ -146,14 +173,22 @@ export class DailyAlert {
     this._popAlert('Chegou a hora boa!',
       `Saindo para almoçar?`,
       [
-        { text: 'Ainda não' },
+        {
+          text: 'Ainda não',
+          handler: () => {
+            this.alerting = false;
+            this._delayNotification();
+          }
+        },
         {
           text: 'Sim',
           handler: () => {
-            this.dailyDraft.lunchOut = new Date();
+            this.dailyDraft.lunchOut = moment().format();
             this.dailyDraft.lunchNotification = true;
 
             Storage.saveItem('dailyDraft', this.dailyDraft);
+
+            this.alerting = false;
           }
         }
       ]
@@ -164,22 +199,35 @@ export class DailyAlert {
     this._popAlert('Um cafezinho iria bem agora...',
       `Chegou do almoço?`,
       [
-        { text: 'Ainda não' },
+        {
+          text: 'Ainda não',
+          handler: () => {
+            this.alerting = false;
+            this._delayNotification();
+          }
+        },
         {
           text: 'Cheguei!',
           handler: () => {
+            let startDate;
 
             if (this.dailyDraft.lunchOut) {
-              this.dailyDraft.draft.tempoImprodutivo = moment().subtract(this.dailyDraft.lunchOut);
+              startDate = moment(this.dailyDraft.lunchOut);
             } else {
-              this.dailyDraft.draft.tempoImprodutivo = moment().subtract(TimeLimitList.LUNCH, 'hours');
+              startDate = moment().hours(TimeLimitList.LUNCH.asHours()).minutes(0);
             }
+
+            let duration = moment.duration( moment().diff(startDate) );
+
+            this.dailyDraft.draft.tempoImprodutivo = moment().hour(duration.hours()).minutes(duration.minutes()).format();
 
             Draft.updateDraft(this.dailyDraft.draft);
 
             this.dailyDraft.backLaunchNotification = true;
 
             Storage.saveItem('dailyDraft', this.dailyDraft);
+
+            this.alerting = false;
           }
         }
       ]
@@ -190,21 +238,40 @@ export class DailyAlert {
     this._popAlert('Bora pra casa!',
       `Saindo do trabalho?`,
       [
-        { text: 'Não, mais tarde' },
+        {
+          text: 'Não, mais tarde',
+          handler: () => {
+            this.alerting = false;
+            this._delayNotification();
+          }
+        },
         {
           text: 'Sim',
           handler: () => {
-            this.dailyDraft.draft.horaChegada = new Date().toISOString();
+            this.dailyDraft.draft.horaSaida = moment().format();
 
             Draft.updateDraft(this.dailyDraft.draft);
 
             this.dailyDraft.outNotification = true;
 
             Storage.saveItem('dailyDraft', this.dailyDraft);
+
+            this.alerting = false;
           }
         }
       ]
     );
+  }
+
+  /**
+   * @private
+  */
+  _delayNotification() {
+    this.delayedNotification = true;
+
+    setTimeout(() => {
+      this.delayedNotification = false;
+    }, 120000); // 2 sec
   }
 
   /**
