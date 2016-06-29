@@ -1,12 +1,26 @@
 .login-page {
 
+  .login-slide {
+    background: #ef5050;
+
+    ion-label[stacked] {
+      color: #fff;
+    }
+
+    ion-input {
+      color: #fff;
+    }
+  }
+
   .login-logo {
     font-family: $styleFont;
-    color: #f53d3d;
-    font-size: 2em;
-    margin-bottom: 10px;
-    margin-top: 40px;
+    color: #ffffff;
+    font-size: 1.5em;
+    margin-bottom: 5%;
+    margin-top: 20%;
   }
+
+
 
   .slide-zoom {
     height: 100%;
@@ -46,7 +60,7 @@
   }
 
   button[block] {
-    margin-top: 40px;
+    margin-top: 20%;
   }
 
   ion-item {
@@ -62,8 +76,8 @@
   }
 
   .error-box {
-    border: 1px solid #e93a3a;
-    color: #e93a3a;
+    border: 1px solid #f7dddd;
+    color: #f7dddd;
     text-align: center;
     padding: 10px;
     font-size: 0.8em;
