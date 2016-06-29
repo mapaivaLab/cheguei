@@ -1,5 +1,13 @@
 .login-page {
 
+  .login-logo {
+    font-family: $styleFont;
+    color: #f53d3d;
+    font-size: 2em;
+    margin-bottom: 10px;
+    margin-top: 40px;
+  }
+
   .slide-zoom {
     height: 100%;
   }
@@ -38,7 +46,7 @@
   }
 
   button[block] {
-    margin-top: 20px;
+    margin-top: 40px;
   }
 
   ion-item {

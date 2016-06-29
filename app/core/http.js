@@ -87,7 +87,7 @@ export class Http {
             err = new RequestError(`Erro interno do servidor ${this.status}`, 'HTTP500');
             break;
           default:
-            err = new RequestError(`Unrecognized status ${this.status}`, 'UnrecognizedHttpStatus');
+            err = new RequestError(`Erro ao fazer requisição. Status ${this.status}`, 'UnrecognizedHttpStatus');
             break;
         }
 

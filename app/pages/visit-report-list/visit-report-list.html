@@ -55,7 +55,7 @@
           <p class="company">{{ v.cliente }}</p>
         </div>
         <div class="column right">
-          <h3>{{ v.data | date:"dd MMM yyyy " }}</h3>
+          <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
           <p class="price">R$ {{ sumReportCost(v) }}</p>
         </div>
       </button>
@@ -83,7 +83,7 @@
         <p class="company">{{ v.cliente }}</p>
       </div>
       <div class="column right">
-        <h3>{{ v.data | date:"dd MMM yyyy " }}</h3>
+        <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
         <p class="price">R$ {{ sumReportCost(v) }}</p>
       </div>
     </button>

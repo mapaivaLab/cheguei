@@ -113,28 +113,37 @@ export class DailyAlert {
 
           if (!this.dailyDraft.mourningNotification) {
             this.popMourningNotification();
+          } else {
+            this.alerting = false;
           }
           break;
         case TimeLimitList.LUNCH:
 
           if (!this.dailyDraft.lunchNotification) {
             this.popLunchNotification();
+          } else {
+            this.alerting = false;
           }
           break;
         case TimeLimitList.BACK_LUNCH:
 
           if (!this.dailyDraft.backLaunchNotification) {
             this.popBackLunchNotification();
+          } else {
+            this.alerting = false;
           }
           break;
         case TimeLimitList.OUT:
 
           if (!this.dailyDraft.outNotification) {
             this.popOutNotification();
+          } else {
+            this.alerting = false;
           }
           break;
         default:
           console.warn('[WARN] No notification limit caught');
+          this.alerting = false;
           break;
       }
     }
@@ -271,7 +280,7 @@ export class DailyAlert {
 
     setTimeout(() => {
       this.delayedNotification = false;
-    }, 120000); // 2 sec
+    }, 900000); // 15 min
   }
 
   /**
@@ -282,6 +291,10 @@ export class DailyAlert {
       title: title,
       message: message,
       buttons: buttons
+    });
+
+    confirm.onDismiss(() => {
+      this.alerting = false;
     });
 
     setTimeout(() => {

@@ -213,6 +213,7 @@ export class VisitReportList {
           text: 'Sim',
           handler: data => {
             console.log('Sim clicado');
+            this.deselectAll();
           }
         }
       ]

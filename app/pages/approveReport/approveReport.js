@@ -13,12 +13,15 @@ export class ApproveReport {
   constructor(nav, navParams) {
     this.nav = nav;
     this.approveDate = moment().format('YYYY-MM-DD');
-
-    console.log(navParams);
+    this.reports = navParams.get('reports');
   }
 
   approveReport() {
     console.log("Aprovar relatório");
+
+    // for (let r of this.reports) {
+    //   r.selected = false;
+    // }
 
     this.nav.pop();
   }
