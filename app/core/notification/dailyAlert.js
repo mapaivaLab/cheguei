@@ -295,6 +295,8 @@ export class DailyAlert {
 
     confirm.onDismiss(() => {
       this.alerting = false;
+      
+      this._delayNotification();
     });
 
     setTimeout(() => {
