@@ -1,8 +1,10 @@
 import { Alert } from 'ionic-angular';
+import {LocalNotifications} from 'ionic-native';
 
 import { Draft } from '../draft';
 
 import moment from 'moment';
+import uuid from 'node-uuid';
 
 const TimeLimitList = {
   MOURNING: moment.duration(8, 'hours'),
@@ -70,10 +72,10 @@ export class DailyAlert {
     let dailyDraft = Storage.getItem('dailyDraft');
 
     if (dailyDraft && moment(dailyDraft.draft.data).format('DD') != moment().format('DD')) {
-      this._popAlert('Dica!',
-        `Existe um rascunho não salvo do dia ${moment(dailyDraft.draft.data).format('DD/MM/YYYY')}... Não esqueça de salvar ;)`,
-        [ { text: 'Ok' } ]
-      );
+      // this._popAlert('Dica!',
+      //   `Existe um rascunho não salvo do dia ${moment(dailyDraft.draft.data).format('DD/MM/YYYY')}... Não esqueça de salvar ;)`,
+      //   [ { text: 'Ok' } ]
+      // );
 
       Storage.saveItem('dailyDraft', null);
 
@@ -124,7 +126,8 @@ export class DailyAlert {
         case TimeLimitList.MOURNING:
 
           if (!this.dailyDraft.mourningNotification) {
-            this.popMourningNotification();
+            // this.popMourningNotification();
+            this._popLocalNotification('Chegando no trabalho?', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -132,7 +135,8 @@ export class DailyAlert {
         case TimeLimitList.LUNCH:
 
           if (!this.dailyDraft.lunchNotification) {
-            this.popLunchNotification();
+            // this.popLunchNotification();
+            this._popLocalNotification('Saindo para almoçar?', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -140,7 +144,8 @@ export class DailyAlert {
         case TimeLimitList.BACK_LUNCH:
 
           if (!this.dailyDraft.backLaunchNotification) {
-            this.popBackLunchNotification();
+            // this.popBackLunchNotification();
+            this._popLocalNotification('Chegou do almoço?"', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -148,7 +153,8 @@ export class DailyAlert {
         case TimeLimitList.OUT:
 
           if (!this.dailyDraft.outNotification) {
-            this.popOutNotification();
+            // this.popOutNotification();
+            this._popLocalNotification('Saindo do trabalho?', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -159,6 +165,39 @@ export class DailyAlert {
           break;
       }
     }
+  }
+
+  _popLocalNotification(text, timeLimit) {
+    console.log(timeLimit);
+
+    LocalNotifications.schedule({
+      id: uuid.v1(),
+      text: text,
+      at: new Date(),
+      led: "FF0000",
+      data: { timeLimit: timeLimit.milliseconds() }
+    });
+
+    LocalNotifications.on('click', (notification) => {
+      console.log(notification);
+
+      let tl = JSON.parse(notification.data).timeLimit;
+
+      switch (tl) {
+        case TimeLimitList.MOURNING:
+          this.popMourningNotification();
+          break;
+        case TimeLimitList.LUNCH:
+          this.popLunchNotification();
+          break;
+        case TimeLimitList.BACK_LUNCH:
+          this.popBackLunchNotification();
+          break;
+        case TimeLimitList.OUT:
+          this.popOutNotification();
+          break;
+      }
+    });
   }
 
   popMourningNotification() {
@@ -176,7 +215,7 @@ export class DailyAlert {
           text: 'Cheguei!',
           handler: () => {
             this.dailyDraft.mourningNotification = true;
-            
+
             this._updateDraft({ name: 'horaChegada', value: moment().format() });
 
             this.alerting = false;

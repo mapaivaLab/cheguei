@@ -39,9 +39,7 @@ export class GeolocationScheduler {
         console.log('Distance', dDistance);
 
         if (dDistance < data.coords.accuracy && canNotificate) {
-          this.popTestNotification();
-
-          canNotificate = false;
+          // TODO
         }
       });
     } else {
@@ -69,20 +67,5 @@ export class GeolocationScheduler {
     let d = R * c; // Distance in km
 
     return d * 1000;
-  }
-
-  popTestNotification() {
-    LocalNotifications.schedule({
-      id: 1,
-      text: "Oloko bixu",
-      at: new Date(),
-      led: "FF0000",
-      icon: "http://i.imgur.com/nL1nDYI.gif",
-      data: { secret: '123 Bamos a la praia' }
-    });
-
-    LocalNotifications.on('click', (notification) => {
-      this.doConfirm(notification);
-    });
   }
 }

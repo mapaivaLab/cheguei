@@ -70,11 +70,14 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
+  </ion-list>
 
+  <ion-list no-lines>
     <!-- Visit Report List -->
     <button ion-item *ngFor="let v of visitsReport"
       [ngClass]="{'selected-report': v.selected, 'report': !v.selected}"
-      (press)="pressReport(v)" (click)="openEditPage(v)">
+      (longPress)="pressReport(v)"
+      (click)="openEditPage(v)">
       <div class="column">
         <div class="avatar" item-left>
           {{ v.cliente[0] }}

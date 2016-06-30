@@ -1,3 +1,4 @@
+import {enableProdMode} from '@angular/core';
 import {Component, ViewChild} from '@angular/core';
 import {ionicBootstrap, Platform, MenuController, Modal} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
@@ -16,6 +17,8 @@ import {Http} from './core/http';
 window.Storage = new AppStorage();
 window.CONFIGS = Storage.getConfigs();
 window.VisitsReportDrafts = Storage.getVisitsReportDrafts();
+
+enableProdMode();
 
 @Component({
   templateUrl: 'build/app.html',
