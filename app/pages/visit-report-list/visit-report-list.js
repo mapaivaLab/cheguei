@@ -3,11 +3,10 @@ import {NewReport} from '../newReport/newReport';
 import {ApproveReport} from '../approveReport/approveReport';
 
 import {Draft} from '../../core/draft';
-import {Http} from '../../core/http';
+import {Report} from '../../core/report';
+import {LongPressDirective} from '../../directives/longPress';
 
 import moment from 'moment';
-
-import {LongPressDirective} from '../../directives/longPress';
 
 @Page({
   templateUrl: 'build/pages/visit-report-list/visit-report-list.html',
@@ -20,7 +19,7 @@ export class VisitReportList {
 
   constructor(nav) {
     this.nav = nav;
-    this.http = new Http();
+    this.refreshing = true;
 
     this.selectedReportsCount = 0;
 
@@ -39,105 +38,23 @@ export class VisitReportList {
     this.getVisitReports();
   }
 
-  onMonthChange() {
-    console.log('Oloko');
-    this.getVisitsReport();
-  }
-
   getVisitReports() {
-    let authInfo = Storage.getAuthInfo();
-    let params = new Map();
+    Report.getReportInfo((reportInfo) => {
+      this.visitsReport = reportInfo.visitsReport;
+      this.monthList = reportInfo.monthList;
+      this.clientList = reportInfo.clientList;
+      this.userList = reportInfo.userList;
 
-    params.set('user', authInfo.user);
+      this.user = this.userList[7];
+      this.month = this.monthList[0];
+      this.client = this.clientList[1];
 
-    if (this.month) {
-      params.set('month', this.month);
-    } else {
-      params.set('month', `${this.getMonth()}/${moment().year()}`);
-    }
-
-    this.http.get('crm.visitsReport/getVisitsReport', {
-      params: params,
-      needAuth: true,
-      handler: (resp, err) => {
-
-        if (err) {
-          const failureToast = Toast.create({
-            message: `Erro buscando reembolsos. ${err.message}`,
-            duration: 5000,
-            showCloseButton: true,
-            closeButtonText: 'Ok'
-          });
-
-          this.nav.present(failureToast);
-        } else {
-
-          // Fill consolidated fields
-          this.mileage = parseFloat(resp.mileage).toFixed(2);
-          this.productiveHours = parseFloat(resp.productiveHours).toFixed(2);
-          this.total = parseFloat(resp.total).toFixed(2);
-          this.totalHours = parseFloat(resp.totalHours).toFixed(2);
-
-          this.monthList = resp.monthList || [];
-          this.clientList = resp.clientList || [];
-          this.userList = resp.userList || [];
-          this.visitsReport = resp.visitsReport || [];
-
-          if (this.monthList.length > 0 && this.userList instanceof Array) {
-            this.month = this.monthList[0];
-          }
-
-          if (this.clientList.length > 0 && this.userList instanceof Array) {
-            this.client = this.clientList[0];
-          }
-
-          if (this.userList.length > 0 && this.userList instanceof Array) {
-            this.user = this.clientList[0];
-          }
-        }
-
-        this.refreshing = false;
-      }
+      this.refreshing = false;
     });
-
-    this.getMonth();
-  }
-
-  getMonth() {
-    let monthNum = moment().month();
-
-    switch (monthNum) {
-      case 0:
-        return 'Janeiro';
-      case 1:
-        return 'Fevereiro';
-      case 2:
-        return 'Março';
-      case 3:
-        return 'Abril';
-      case 4:
-        return 'Maio';
-      case 5:
-        return 'Junho';
-      case 6:
-        return 'Julho';
-      case 7:
-        return 'Agosto';
-      case 8:
-        return 'Setembro';
-      case 9:
-        return 'Outubro';
-      case 10:
-        return 'Novembro';
-      case 11:
-        return 'Dezembro';
-      default:
-        return '';
-    }
   }
 
   prettifyDate(date) {
-    return moment(date).format('DD/MM/YYYY');
+    return Report.prettifyDate(date);
   }
 
   pressReport(report) {
@@ -145,17 +62,7 @@ export class VisitReportList {
   }
 
   sumReportCost(report) {
-    let amount = 0;
-
-    if (report.outrosGastos) {
-      amount += parseFloat(report.outrosGastos);
-    }
-
-    if (report.refeicao) {
-      amount += parseFloat(report.refeicao);
-    }
-
-    return amount.toFixed(2);
+    return Report.sumReportCost(report);
   }
 
   openNewReportPage(params) {
@@ -323,50 +230,4 @@ export class VisitReportList {
       savingToast.destroy();
     }, 3000);
   }
-
-  // saveDraft(report) {
-  //   const savingToast = Toast.create({
-  //     message: 'Salvando reembolso...',
-  //   });
-  //
-  //   this.nav.present(savingToast);
-  //
-  //   let bkpReport = report;
-  //
-  //   Draft.deleteDraft(report);
-  //
-  //   this.http.post('crm.visitsReport/saveVisitReport',  {
-  //     params: new Map(),
-  //     needAuth: true,
-  //     data: report,
-  //     handler: (resp, err) => {
-  //       savingToast.dismiss();
-  //
-  //       if (err) {
-  //         const errorToast = Toast.create({
-  //           message: `Erro ao salvar relatório. ${err.message}`,
-  //           duration: 5000,
-  //           showCloseButton: true,
-  //           closeButtonText: 'Ok'
-  //         });
-  //
-  //         this.nav.present(errorToast);
-  //         savingToast.destroy();
-  //
-  //         Draft.createDraft(bkpReport);
-  //       } else {
-  //         const successToast = Toast.create({
-  //           message: 'Reembolso salvo com sucesso',
-  //           duration: 3000,
-  //           showCloseButton: true,
-  //           closeButtonText: 'Ok'
-  //         });
-  //
-  //         this.nav.present(successToast);
-  //
-  //         savingToast.destroy();
-  //       }
-  //     }
-  //   });
-  // }
 }

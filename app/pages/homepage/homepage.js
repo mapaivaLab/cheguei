@@ -2,7 +2,7 @@ import {Page, NavController, Alert, Toast} from 'ionic-angular';
 import {NewReport} from '../newReport/newReport';
 
 import {Draft} from '../../core/draft';
-import {Http} from '../../core/http';
+import {Report} from '../../core/report';
 
 import moment from 'moment';
 
@@ -17,63 +17,31 @@ export class Homepage {
   constructor(nav) {
     this.nav = nav;
     this.refreshing = true;
-    this.http = new Http();
 
-    this.getVisitReports();
-
-    // Fill consolidated fields
+    this.visitsReport = [];
     this.mileage = 0;
     this.productiveHours = 0;
     this.total = 0;
     this.totalHours = 0;
 
-    // Fill repots lists
     this.visitsReportDrafts = VisitsReportDrafts;
 
-    this.visitsReport = [];
+    this.getVisitReports();
   }
 
   getVisitReports() {
-    let authInfo = Storage.getAuthInfo();
-    let params = new Map();
+    Report.getReportInfo((reportInfo) => {
+      this.visitsReport = reportInfo.visitsReport;
+      this.mileage = parseFloat(reportInfo.mileage).toFixed(2);
+      this.productiveHours = parseFloat(reportInfo.productiveHours).toFixed(2);
+      this.total = parseFloat(reportInfo.total).toFixed(2);
+      this.totalHours = parseFloat(reportInfo.totalHours).toFixed(2);
 
-    params.set('user', authInfo.user);
-    params.set('month', `${this.getMonth()}/${moment().year()}`);
-
-    this.http.get('crm.visitsReport/getVisitsReport', {
-      params: params,
-      needAuth: true,
-      handler: (resp, err) => {
-
-        if (err) {
-          const failureToast = Toast.create({
-            message: `Erro buscando reembolsos. ${err.message}`,
-            duration: 5000,
-            showCloseButton: true,
-            closeButtonText: 'Ok'
-          });
-
-          this.nav.present(failureToast);
-        } else {
-          // Fill consolidated fields
-          this.mileage = parseFloat(resp.mileage).toFixed(2);
-          this.productiveHours = parseFloat(resp.productiveHours).toFixed(2);
-          this.total = parseFloat(resp.total).toFixed(2);
-
-          this.totalHours = parseFloat(resp.totalHours).toFixed(2);
-
-          this.visitsReport = resp.visitsReport;
-        }
-
-        this.refreshing = false;
-      }
+      this.refreshing = false;
     });
-
-    this.getMonth();
   }
 
   getTotalValue() {
-
     if (this.total && this.total != "NaN") {
       return this.total;
     } else {
@@ -81,55 +49,12 @@ export class Homepage {
     }
   }
 
-  getMonth() {
-    let monthNum = moment().month();
-
-    switch (monthNum) {
-      case 0:
-        return 'Janeiro';
-      case 1:
-        return 'Fevereiro';
-      case 2:
-        return 'Março';
-      case 3:
-        return 'Abril';
-      case 4:
-        return 'Maio';
-      case 5:
-        return 'Junho';
-      case 6:
-        return 'Julho';
-      case 7:
-        return 'Agosto';
-      case 8:
-        return 'Setembro';
-      case 9:
-        return 'Outubro';
-      case 10:
-        return 'Novembro';
-      case 11:
-        return 'Dezembro';
-      default:
-        return '';
-    }
-  }
-
   sumReportCost(report) {
-    let amount = 0;
-
-    if (report.outrosGastos) {
-      amount += parseFloat(report.outrosGastos);
-    }
-
-    if (report.refeicao) {
-      amount += parseFloat(report.refeicao);
-    }
-
-    return amount.toFixed(2);
+    return Report.sumReportCost(report);
   }
 
   prettifyDate(date) {
-    return moment(date).format('DD/MM/YYYY');
+    return Report.prettifyDate(date);
   }
 
   openNewReportPage(params) {
@@ -184,8 +109,6 @@ export class Homepage {
       });
 
       this.nav.present(successToast);
-
-      console.log(bkpReport);
 
       savingToast.destroy();
     }, 3000);

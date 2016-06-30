@@ -25,7 +25,7 @@
   <ion-list no-borders>
     <ion-item>
       <ion-label>Mês</ion-label>
-        <ion-select [(ngModel)]="month" (change)="onMonthChange()">
+        <ion-select [(ngModel)]="month">
           <ion-option *ngFor="let m of monthList" value="{{ m }}">{{ m }}</ion-option>
         </ion-select>
     </ion-item>

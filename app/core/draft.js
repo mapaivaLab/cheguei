@@ -81,3 +81,50 @@ class DraftUtils {
 let Draft = new DraftUtils();
 
 export { Draft };
+
+// TODO
+// saveDraft(report) {
+//   const savingToast = Toast.create({
+//     message: 'Salvando reembolso...',
+//   });
+//
+//   this.nav.present(savingToast);
+//
+//   let bkpReport = report;
+//
+//   Draft.deleteDraft(report);
+//
+//   this.http.post('crm.visitsReport/saveVisitReport',  {
+//     params: new Map(),
+//     needAuth: true,
+//     data: report,
+//     handler: (resp, err) => {
+//       savingToast.dismiss();
+//
+//       if (err) {
+//         const errorToast = Toast.create({
+//           message: `Erro ao salvar relatório. ${err.message}`,
+//           duration: 5000,
+//           showCloseButton: true,
+//           closeButtonText: 'Ok'
+//         });
+//
+//         this.nav.present(errorToast);
+//         savingToast.destroy();
+//
+//         Draft.createDraft(bkpReport);
+//       } else {
+//         const successToast = Toast.create({
+//           message: 'Reembolso salvo com sucesso',
+//           duration: 3000,
+//           showCloseButton: true,
+//           closeButtonText: 'Ok'
+//         });
+//
+//         this.nav.present(successToast);
+//
+//         savingToast.destroy();
+//       }
+//     }
+//   });
+// }
