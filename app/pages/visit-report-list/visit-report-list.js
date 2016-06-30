@@ -39,12 +39,22 @@ export class VisitReportList {
     this.getVisitReports();
   }
 
+  onMonthChange() {
+    console.log('Oloko');
+    this.getVisitsReport();
+  }
+
   getVisitReports() {
     let authInfo = Storage.getAuthInfo();
     let params = new Map();
 
     params.set('user', authInfo.user);
-    params.set('month', `${this.getMonth()}/${moment().year()}`);
+
+    if (this.month) {
+      params.set('month', this.month);
+    } else {
+      params.set('month', `${this.getMonth()}/${moment().year()}`);
+    }
 
     this.http.get('crm.visitsReport/getVisitsReport', {
       params: params,
@@ -73,15 +83,15 @@ export class VisitReportList {
           this.userList = resp.userList || [];
           this.visitsReport = resp.visitsReport || [];
 
-          if (this.monthList.length > 0) {
+          if (this.monthList.length > 0 && this.userList instanceof Array) {
             this.month = this.monthList[0];
           }
 
-          if (this.clientList.length > 0) {
+          if (this.clientList.length > 0 && this.userList instanceof Array) {
             this.client = this.clientList[0];
           }
 
-          if (this.userList.length > 0) {
+          if (this.userList.length > 0 && this.userList instanceof Array) {
             this.user = this.clientList[0];
           }
         }
@@ -131,7 +141,6 @@ export class VisitReportList {
   }
 
   pressReport(report) {
-    console.log('Oloko');
     this.toggleReport(report);
   }
 

@@ -59,6 +59,7 @@ export class Homepage {
           this.mileage = parseFloat(resp.mileage).toFixed(2);
           this.productiveHours = parseFloat(resp.productiveHours).toFixed(2);
           this.total = parseFloat(resp.total).toFixed(2);
+
           this.totalHours = parseFloat(resp.totalHours).toFixed(2);
 
           this.visitsReport = resp.visitsReport;
@@ -69,6 +70,15 @@ export class Homepage {
     });
 
     this.getMonth();
+  }
+
+  getTotalValue() {
+
+    if (this.total && this.total != "NaN") {
+      return this.total;
+    } else {
+      return 0;
+    }
   }
 
   getMonth() {

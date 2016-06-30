@@ -126,8 +126,8 @@ export class DailyAlert {
         case TimeLimitList.MOURNING:
 
           if (!this.dailyDraft.mourningNotification) {
-            // this.popMourningNotification();
-            this._popLocalNotification('Chegando no trabalho?', timeLimit);
+            this.popMourningNotification();
+            // this._popLocalNotification('Chegando no trabalho?', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -135,8 +135,8 @@ export class DailyAlert {
         case TimeLimitList.LUNCH:
 
           if (!this.dailyDraft.lunchNotification) {
-            // this.popLunchNotification();
-            this._popLocalNotification('Saindo para almoçar?', timeLimit);
+            this.popLunchNotification();
+            // this._popLocalNotification('Saindo para almoçar?', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -144,8 +144,8 @@ export class DailyAlert {
         case TimeLimitList.BACK_LUNCH:
 
           if (!this.dailyDraft.backLaunchNotification) {
-            // this.popBackLunchNotification();
-            this._popLocalNotification('Chegou do almoço?"', timeLimit);
+            this.popBackLunchNotification();
+            // this._popLocalNotification('Chegou do almoço?', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -153,8 +153,8 @@ export class DailyAlert {
         case TimeLimitList.OUT:
 
           if (!this.dailyDraft.outNotification) {
-            // this.popOutNotification();
-            this._popLocalNotification('Saindo do trabalho?', timeLimit);
+            this.popOutNotification();
+            // this._popLocalNotification('Saindo do trabalho?', timeLimit);
           } else {
             this.alerting = false;
           }
@@ -168,14 +168,18 @@ export class DailyAlert {
   }
 
   _popLocalNotification(text, timeLimit) {
-    console.log(timeLimit);
-
     LocalNotifications.schedule({
       id: uuid.v1(),
       text: text,
       at: new Date(),
       led: "FF0000",
-      data: { timeLimit: timeLimit.milliseconds() }
+      data: { timeLimit: timeLimit.asMilliseconds() }
+    });
+
+    LocalNotifications.on('canceled', () => {
+      this.alerting = false;
+
+      console.log('Notificatio');
     });
 
     LocalNotifications.on('click', (notification) => {
@@ -184,16 +188,16 @@ export class DailyAlert {
       let tl = JSON.parse(notification.data).timeLimit;
 
       switch (tl) {
-        case TimeLimitList.MOURNING:
+        case TimeLimitList.MOURNING.asMilliseconds():
           this.popMourningNotification();
           break;
-        case TimeLimitList.LUNCH:
+        case TimeLimitList.LUNCH.asMilliseconds():
           this.popLunchNotification();
           break;
-        case TimeLimitList.BACK_LUNCH:
+        case TimeLimitList.BACK_LUNCH.asMilliseconds():
           this.popBackLunchNotification();
           break;
-        case TimeLimitList.OUT:
+        case TimeLimitList.OUT.asMilliseconds():
           this.popOutNotification();
           break;
       }
@@ -356,6 +360,6 @@ export class DailyAlert {
 
     setTimeout(() => {
       this.nav.present(confirm);
-    }, 3000);
+    }, 1000);
   }
 }
