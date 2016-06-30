@@ -26,4 +26,10 @@ export class NotificationService {
       this.scheduler.start();
     }
   }
+
+  stop() {
+    this.scheduler.stop();
+
+    this.started = false;
+  }
 }

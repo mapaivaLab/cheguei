@@ -32,7 +32,7 @@
     <ion-item>
       <ion-label>Cliente</ion-label>
         <ion-select [(ngModel)]="client">
-          <ion-option *ngFor="let c of clientLists" value="{{ c }}">{{ c }}</ion-option>
+          <ion-option *ngFor="let c of clientList" value="{{ c }}">{{ c }}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
@@ -55,7 +55,7 @@
           <p class="company">{{ v.cliente }}</p>
         </div>
         <div class="column right">
-          <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
+          <h3>{{ prettifyDate(v.data) }}</h3>
           <p class="price">R$ {{ sumReportCost(v) }}</p>
         </div>
       </button>
@@ -83,7 +83,7 @@
         <p class="company">{{ v.cliente }}</p>
       </div>
       <div class="column right">
-        <h3>{{ v.data | date:"dd/MM/yyyy" }}</h3>
+        <h3>{{ prettifyDate(v.data) }}</h3>
         <p class="price">R$ {{ sumReportCost(v) }}</p>
       </div>
     </button>

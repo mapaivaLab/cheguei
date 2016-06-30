@@ -6,6 +6,8 @@ import {Draft} from '../../core/draft';
 
 import moment from 'moment';
 
+import {Http} from '../../core/http';
+
 @Page({
   templateUrl: 'build/pages/visit-report-list/visit-report-list.html'
 })
@@ -16,90 +18,114 @@ export class VisitReportList {
 
   constructor(nav) {
     this.nav = nav;
+    this.http = new Http();
 
     this.selectedReportsCount = 0;
 
-    this.monthList = [
-      "Junho/2016",
-      "Maio/2016",
-      "Abril/2016",
-      "Março/2016",
-      "Fevereiro/2016",
-      "Janeiro/2016",
-      "Dezembro/2015",
-      "Novembro/2015",
-      "Outubro/2015",
-      "Setembro/2015",
-      "Agosto/2015",
-      "Julho/2015",
-      "Junho/2015",
-      "Maio/2015",
-      "Abril/2015",
-      "Março/2015",
-      "Fevereiro/2015",
-      "Janeiro/2015"
-    ];
+    this.monthList = [];
+    this.clientList = [];
+    this.userList = [];
 
-    this.month = this.monthList[0];
+    this.month = null;
+    this.user = null;
+    this.client = null;
 
     this.visitsReportDrafts = VisitsReportDrafts;
 
-    this.visitsReport = [
-      {
-        cliente: "CODIT",
-        data: moment("2016-06-02T00:00:00-03:00").toDate(),
-        descricao: "Dia de trabalho",
-        detalheDespesa: "Outros gastos = transporte",
-        detalheVisita: "",
-        duracao: "1900-01-01T09:14:00-03:06",
-        horaChegada: "1900-01-01T08:02:00-03:06",
-        horaSaida:"1900-01-01T17:16:00-03:06",
-        id_relatorioVisita:"xD20160602H201725976R000000080",
-        intervaloEspera: "1900-01-01T00:00:00-03:06",
-        outrosGastos: "55.6",
-        pedagio: "0.0",
-        quilometragem: "0.0",
-        refeicao: "8",
-        tempoImprodutivo: "1900-01-01T00:30:00-03:06",
-        usuarioInsercao: "Matheus Paiva"
-      },
-      {
-        cliente: "CODIT",
-        data: moment("2016-06-02T00:00:00-03:00").toDate(),
-        descricao: "Dia de trabalho",
-        detalheDespesa: "Outros gastos = transporte",
-        detalheVisita: "",
-        duracao: "1900-01-01T09:14:00-03:06",
-        horaChegada: "1900-01-01T08:02:00-03:06",
-        horaSaida:"1900-01-01T17:16:00-03:06",
-        id_relatorioVisita:"xD20160602H201725976R000000080",
-        intervaloEspera: "1900-01-01T00:00:00-03:06",
-        outrosGastos: "55.6",
-        pedagio: "0.0",
-        quilometragem: "0.0",
-        refeicao: "8",
-        tempoImprodutivo: "1900-01-01T00:30:00-03:06",
-        usuarioInsercao: "Matheus Paiva"
-      },
-      {
-        cliente: "FEST COLOR",
-        data: moment("2016-06-02T00:00:00-03:00").toDate(),
-        descricao: "Dia de trabalho",
-        detalheDespesa: "Outros gastos = transporte",
-        detalheVisita: "",
-        duracao: "1900-01-01T09:14:00-03:06",
-        horaChegada: "1900-01-01T08:02:00-03:06",
-        horaSaida:"1900-01-01T17:16:00-03:06",
-        id_relatorioVisita:"xD20160602H201725976R000000080",
-        intervaloEspera: "1900-01-01T00:00:00-03:06",
-        outrosGastos: "55.6",
-        pedagio: "0.0",
-        quilometragem: "0.0",
-        refeicao: "8",
-        tempoImprodutivo: "1900-01-01T00:30:00-03:06",
-        usuarioInsercao: "Matheus Paiva"
+    this.visitsReport = [];
+
+    this.getVisitReports();
+  }
+
+  getVisitReports() {
+    let authInfo = Storage.getAuthInfo();
+    let params = new Map();
+
+    params.set('user', authInfo.user);
+    params.set('month', `${this.getMonth()}/${moment().year()}`);
+
+    this.http.get('crm.visitsReport/getVisitsReport', {
+      params: params,
+      needAuth: true,
+      handler: (resp, err) => {
+
+        if (err) {
+          const failureToast = Toast.create({
+            message: `Erro buscando reembolsos. ${err.message}`,
+            duration: 5000,
+            showCloseButton: true,
+            closeButtonText: 'Ok'
+          });
+
+          this.nav.present(failureToast);
+        } else {
+
+          // Fill consolidated fields
+          this.mileage = parseFloat(resp.mileage).toFixed(2);
+          this.productiveHours = parseFloat(resp.productiveHours).toFixed(2);
+          this.total = parseFloat(resp.total).toFixed(2);
+          this.totalHours = parseFloat(resp.totalHours).toFixed(2);
+
+          this.monthList = resp.monthList || [];
+          this.clientList = resp.clientList || [];
+          this.userList = resp.userList || [];
+          this.visitsReport = resp.visitsReport || [];
+
+          if (this.monthList.length > 0) {
+            this.month = this.monthList[0];
+          }
+
+          if (this.clientList.length > 0) {
+            this.client = this.clientList[0];
+          }
+
+          if (this.userList.length > 0) {
+            this.user = this.clientList[0];
+          }
+        }
+
+        this.refreshing = false;
       }
-    ];
+    });
+
+    this.getMonth();
+  }
+
+  getMonth() {
+    let monthNum = moment().month();
+
+    switch (monthNum) {
+      case 0:
+        return 'Janeiro';
+      case 1:
+        return 'Fevereiro';
+      case 2:
+        return 'Março';
+      case 3:
+        return 'Abril';
+      case 4:
+        return 'Maio';
+      case 5:
+        return 'Junho';
+      case 6:
+        return 'Julho';
+      case 7:
+        return 'Agosto';
+      case 8:
+        return 'Setembro';
+      case 9:
+        return 'Outubro';
+      case 10:
+        return 'Novembro';
+      case 11:
+        return 'Dezembro';
+      default:
+        return '';
+    }
+  }
+
+  prettifyDate(date) {
+    return moment(date).format('DD/MM/YYYY');
   }
 
   pressReport(report) {
@@ -117,7 +143,7 @@ export class VisitReportList {
       amount += parseFloat(report.refeicao);
     }
 
-    return amount;
+    return amount.toFixed(2);
   }
 
   openNewReportPage(params) {
@@ -270,19 +296,38 @@ export class VisitReportList {
 
     Draft.deleteDraft(report);
 
-    setTimeout(() => {
-      savingToast.dismiss();
+    this.http.post('crm.visitsReport/saveVisitReport',  {
+      params: new Map(),
+      needAuth: true,
+      data: report,
+      handler: (resp, err) => {
+        savingToast.dismiss();
 
-      const successToast = Toast.create({
-        message: 'Reembolso salvo com sucesso',
-        duration: 3000,
-        showCloseButton: true,
-        closeButtonText: 'Ok'
-      });
+        if (err) {
+          const errorToast = Toast.create({
+            message: `Erro ao salvar relatório. ${err.message}`,
+            duration: 5000,
+            showCloseButton: true,
+            closeButtonText: 'Ok'
+          });
 
-      this.nav.present(successToast);
+          this.nav.present(errorToast);
+          savingToast.destroy();
 
-      savingToast.destroy();
-    }, 3000);
+          Draft.createDraft(bkpReport);
+        } else {
+          const successToast = Toast.create({
+            message: 'Reembolso salvo com sucesso',
+            duration: 3000,
+            showCloseButton: true,
+            closeButtonText: 'Ok'
+          });
+
+          this.nav.present(successToast);
+
+          savingToast.destroy();
+        }
+      }
+    });
   }
 }

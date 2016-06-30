@@ -45,13 +45,25 @@ export class DailyAlert {
 
   startWatchDog() {
 
-    this.watchDog = setInterval(() => {
-      this.alert();
-    }, 3000); // Each 3 seconds
+    if (!this.watchDog) {
+      this.watchDog = setInterval(() => {
+        this.alert();
+      }, 3000); // Each 3 seconds
+    }
   }
 
   stopWatchDog() {
     clearInterval(this.watchDog);
+
+    this.watchDog = null;
+  }
+
+  start() {
+    this.startWatchDog();
+  }
+
+  stop() {
+    this.stopWatchDog();
   }
 
   checkPreviouslyDailyDraft() {
@@ -163,13 +175,9 @@ export class DailyAlert {
         {
           text: 'Cheguei!',
           handler: () => {
-            this.dailyDraft.draft.horaChegada = moment().format();
-
-            Draft.updateDraft(this.dailyDraft.draft);
-
             this.dailyDraft.mourningNotification = true;
-
-            Storage.saveItem('dailyDraft', this.dailyDraft);
+            
+            this._updateDraft({ name: 'horaChegada', value: moment().format() });
 
             this.alerting = false;
           }
@@ -196,7 +204,6 @@ export class DailyAlert {
             this.dailyDraft.lunchNotification = true;
 
             Storage.saveItem('dailyDraft', this.dailyDraft);
-
             this.alerting = false;
           }
         }
@@ -228,13 +235,9 @@ export class DailyAlert {
 
             let duration = moment.duration( moment().diff(startDate) );
 
-            this.dailyDraft.draft.tempoImprodutivo = moment().hour(duration.hours()).minutes(duration.minutes()).format();
-
-            Draft.updateDraft(this.dailyDraft.draft);
-
             this.dailyDraft.backLaunchNotification = true;
 
-            Storage.saveItem('dailyDraft', this.dailyDraft);
+            this._updateDraft({ name: 'tempoImprodutivo', value: moment().hour(duration.hours()).minutes(duration.minutes()).format() });
 
             this.alerting = false;
           }
@@ -257,19 +260,32 @@ export class DailyAlert {
         {
           text: 'Sim',
           handler: () => {
-            this.dailyDraft.draft.horaSaida = moment().format();
-
-            Draft.updateDraft(this.dailyDraft.draft);
-
             this.dailyDraft.outNotification = true;
 
-            Storage.saveItem('dailyDraft', this.dailyDraft);
+            this._updateDraft({ name: 'horaSaida', value: moment().format() });
 
             this.alerting = false;
           }
         }
       ]
     );
+  }
+
+  /**
+  * @private
+  */
+  _updateDraft(field = {}) {
+    let searchedDraft = Draft.findDraft(this.dailyDraft.draft.id_draft);
+
+    if (searchedDraft && field.name) {
+      searchedDraft[field.name] = field.value;
+
+      Draft.updateDraft(searchedDraft);
+
+      this.dailyDraft.draft = searchedDraft;
+
+      Storage.saveItem('dailyDraft', this.dailyDraft);
+    }
   }
 
   /**
@@ -295,7 +311,7 @@ export class DailyAlert {
 
     confirm.onDismiss(() => {
       this.alerting = false;
-      
+
       this._delayNotification();
     });
 

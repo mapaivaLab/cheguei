@@ -21,12 +21,22 @@ export class Http {
     }
   }
 
-  put(method, URL, userServerURL = true) {
+  put(URL, opts = {}) {
 
+    if (opts.needAuth) {
+      this._requestAuth('PUT', URL, opts);
+    } else {
+      this._request('PUT', URL, opts);
+    }
   }
 
-  post(method, URL, userServerURL = true) {
+  post(URL, opts = {}) {
 
+    if (opts.needAuth) {
+      this._requestAuth('POST', URL, opts);
+    } else {
+      this._request('POST', URL, opts);
+    }
   }
 
   delete() {
@@ -92,15 +102,25 @@ export class Http {
         }
 
         me._invokeHanlder(opts.handler, resp, err);
+
+        if (opts.doLogoff) {
+          me._requestlogoff(opts.id_session)
+        }
       }
     };
 
-    xhr.send();
+    switch (method) {
+      case 'POST':
+        xhr.send(JSON.stringify(opts.data));
+        break;
+      default:
+        xhr.send();
+        break;
+    }
   }
 
   _requestAuth(method, URL, opts) {
     let params = new Map();
-
     let authInfo = Storage.getAuthInfo();
 
     if (!authInfo.user || !authInfo.pass) {
@@ -120,9 +140,25 @@ export class Http {
 
             opts.params.set('id_session', resp['@id_session']);
 
+            opts.doLogoff = true;
+            opts.id_session = opts.params.get('id_session');
+
             this._request(method, URL, opts);
           }
         }
+      });
+    }
+  }
+
+  _requestlogoff(id_session) {
+    let params = new Map();
+    let authInfo = Storage.getAuthInfo();
+
+    if (id_session) {
+      params.set('id_session', id_session);
+
+      this.get('core.sec.auth/glogoff', {
+        params: params
       });
     }
   }

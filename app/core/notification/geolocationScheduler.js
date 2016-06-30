@@ -49,6 +49,10 @@ export class GeolocationScheduler {
     }
   }
 
+  stop() {
+    this.dailyAlert.stop();
+  }
+
   /**
    * Returns a distance difference between two lat, logn coordinates in meters
    * @return {Number}

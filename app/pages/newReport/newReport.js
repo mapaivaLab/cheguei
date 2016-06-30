@@ -50,7 +50,7 @@ export class NewReport {
   }
 
   pickImage() {
-    Camera.getPicture({ destinationType: Camera.DestinationType.DATA_URL }).then((imageData) => {
+    Camera.getPicture({ destinationType: Camera.DestinationType.DATA_URL, quality: 50 }).then((imageData) => {
       this.newReport.image.data = 'data:image/jpeg;base64,' + imageData;
     },
     (err) => {

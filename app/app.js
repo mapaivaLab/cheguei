@@ -78,6 +78,7 @@ class MyApp {
   }
 
   logout() {
+    this.notiService.stop();
     Storage.saveAuthInfo({ user: null, pass: null });
 
     this.menu.close();
