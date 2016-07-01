@@ -65,6 +65,10 @@ export class Homepage {
     this.openNewReportPage({ report: report });
   }
 
+  getMonthName() {
+    return Report.getMonthName();
+  }
+
   // Drafts
 
   deleteDraft(report) {

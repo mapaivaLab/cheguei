@@ -101,7 +101,7 @@ export class NewReport {
 
       loading.onDismiss(() => {
         const errorToast = Toast.create({
-          message: 'Erro na comunicação com o servidor. Reembolso mantido como rascunho',
+          message: 'Erro na comunicação com o servidor',
           duration: 4000,
           showCloseButton: true,
           closeButtonText: 'Ok'

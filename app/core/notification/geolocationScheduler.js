@@ -79,8 +79,8 @@ export class GeolocationScheduler {
       data.coords.longitude, data.coords.latitude);
 
     // console.log(data.coords);
-    console.log('Distance', dDistance);
-    console.log(CONFIGS.notificationRole.geolocConfig);
+    // console.log('Distance', dDistance);
+    // console.log(CONFIGS.notificationRole.geolocConfig);
 
     if (Math.floor(dDistance) < data.coords.accuracy) {
       return true;
