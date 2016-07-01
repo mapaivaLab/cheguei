@@ -10,6 +10,7 @@ import {Homepage} from './pages/homepage/homepage';
 import {SettingsPage} from './pages/settings/settings';
 import {VisitReportList} from './pages/visit-report-list/visit-report-list';
 import {LoginPage} from './pages/login/login';
+import {StatsPage} from './pages/graphs/graphs';
 
 import {Http} from './core/http';
 
@@ -41,8 +42,8 @@ class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Resumo', component: Homepage, icon: 'paper' },
-      { title: 'Reembolsos', component: VisitReportList, icon: 'grid' }
-      // { title: 'Cheguei com música', component: null, icon: 'headset' }
+      { title: 'Reembolsos', component: VisitReportList, icon: 'grid' },
+      { title: 'Estatísticas', component: StatsPage, icon: 'stats' }
     ];
 
     this.bottomPages = [

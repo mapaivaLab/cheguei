@@ -1,0 +1,13 @@
+
+<ion-navbar *navbar danger>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>{{ loading ? 'Calculando...' : 'Estatísticas de Reembolsos' }}</ion-title>
+</ion-navbar>
+
+<ion-content class="graphs" padding>
+  <h3>Média de gastos para o mês de {{ getMonthName() }}</h3>
+  <h1>R$ {{ average }}</h1>
+  <canvas id="reportChart" width="400" height="400"></canvas>
+</ion-content>
