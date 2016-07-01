@@ -28,7 +28,7 @@ export class DailyAlert {
         this.createDailyDraft();
       }
     }
-    
+
     this.startWatchDog();
   }
 
@@ -101,7 +101,7 @@ export class DailyAlert {
       draft: Draft.createEmptyDraft(),
       mourningNotification: false,
       lunchNotification: false,
-      backLaunchNotification: false,
+      backLunchNotification: false,
       outNotification: false
     };
 
@@ -136,7 +136,7 @@ export class DailyAlert {
           break;
         case TimeLimitList.BACK_LUNCH:
 
-          if (!this.dailyDraft.backLaunchNotification) {
+          if (!this.dailyDraft.backLunchNotification) {
             this.popBackLunchNotification();
             // this._popLocalNotification('Chegou do almoço?', timeLimit);
           } else {
@@ -313,7 +313,7 @@ export class DailyAlert {
 
             let duration = moment.duration( moment().diff(startDate) );
 
-            this.dailyDraft.backLaunchNotification = true;
+            this.dailyDraft.backLunchNotification = true;
 
             this._updateDraft({ name: 'tempoImprodutivo', value: moment().hour(duration.hours()).minutes(duration.minutes()).format() });
 

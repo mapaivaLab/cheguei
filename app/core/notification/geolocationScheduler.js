@@ -55,7 +55,7 @@ export class GeolocationScheduler {
           case this.dailyAlert.TimeLimitList.BACK_LUNCH:
 
             if (this.amIInTheSavedPlace(data) && this.dailyAlert.canNotify(true)
-              && !this.dailyAlert.dailyDraft.backLaunchNotification) {
+              && !this.dailyAlert.dailyDraft.backLunchNotification) {
               this.dailyAlert.popBackLunchNotification();
             }
             break;
