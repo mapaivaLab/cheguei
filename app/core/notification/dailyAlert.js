@@ -21,6 +21,14 @@ export class DailyAlert {
     this.delayedNotification = false;
     this.TimeLimitList = TimeLimitList;
 
+    if (this.canNotify()) {
+      this.dailyDraft = this.checkPreviouslyDailyDraft();
+
+      if (!this.dailyDraft) {
+        this.createDailyDraft();
+      }
+    }
+    
     this.startWatchDog();
   }
 

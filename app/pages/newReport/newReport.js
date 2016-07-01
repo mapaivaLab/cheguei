@@ -100,6 +100,14 @@ export class NewReport {
       });
 
       loading.onDismiss(() => {
+        const errorToast = Toast.create({
+          message: 'Erro na comunicação com o servidor. Reembolso mantido como rascunho',
+          duration: 4000,
+          showCloseButton: true,
+          closeButtonText: 'Ok'
+        });
+
+        this.nav.present(errorToast);
         this.nav.pop();
       });
 

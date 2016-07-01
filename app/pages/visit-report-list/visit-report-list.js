@@ -218,14 +218,16 @@ export class VisitReportList {
     setTimeout(() => {
       savingToast.dismiss();
 
-      const successToast = Toast.create({
-        message: 'Reembolso salvo com sucesso',
-        duration: 3000,
+      const errorToast = Toast.create({
+        message: 'Erro na comunicação com o servidor. Reembolso mantido como rascunho',
+        duration: 4000,
         showCloseButton: true,
         closeButtonText: 'Ok'
       });
 
-      this.nav.present(successToast);
+      this.nav.present(errorToast);
+
+      Draft.createDraft(bkpReport);
 
       savingToast.destroy();
     }, 3000);
