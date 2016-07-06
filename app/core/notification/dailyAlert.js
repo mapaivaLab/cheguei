@@ -7,6 +7,7 @@ import moment from 'moment';
 import uuid from 'node-uuid';
 
 const TimeLimitList = {
+  PRE_MOURNING: moment.duration(1, 'hours'),
   MOURNING: moment.duration(8, 'hours'),
   LUNCH: moment.duration(12, 'hours'),
   BACK_LUNCH: moment.duration(13, 'hours'),
@@ -17,20 +18,13 @@ export class DailyAlert {
 
   constructor(nav) {
     this.nav = nav;
-    this.dailyDraft = this.checkPreviouslyDailyDraft();
     this.delayedNotification = false;
+    this.TimeLimitList = TimeLimitList;
 
-    if (this.canNotify()) {
-
-      if (!this.dailyDraft) {
-        this.createDailyDraft();
-      }
-
-      this.startWatchDog();
-    }
+    this.startWatchDog();
   }
 
-  canNotify() {
+  canNotify(ignoreDelayNotification = false) {
     let weekDayNow = moment().weekday();
     let canNotify = false;
 
@@ -42,14 +36,23 @@ export class DailyAlert {
       }
     }
 
-    return canNotify && !this.alerting && !this.delayedNotification;
+    return canNotify && !this.alerting && (!this.delayedNotification || ignoreDelayNotification);
   }
 
   startWatchDog() {
 
     if (!this.watchDog) {
       this.watchDog = setInterval(() => {
-        this.alert();
+
+        if (this.canNotify()) {
+          this.dailyDraft = this.checkPreviouslyDailyDraft();
+
+          if (!this.dailyDraft) {
+            this.createDailyDraft();
+          }
+
+          this.alert();
+        }
       }, 3000); // Each 3 seconds
     }
   }
@@ -102,25 +105,7 @@ export class DailyAlert {
     if (this.canNotify()) {
       this.alerting = true;
 
-      let time = moment.duration(parseInt(moment().format('HH')), 'hours')
-        .add(parseInt(moment().format('MM')), 'minutes');
-
-      let timeLimit;
-      let timeLimitArray = [TimeLimitList.MOURNING, TimeLimitList.LUNCH, TimeLimitList.BACK_LUNCH, TimeLimitList.OUT];
-
-      for (let i = 0; i < timeLimitArray.length; i++) {
-
-        if (timeLimitArray[i + 1]) {
-
-          if (time.asMilliseconds() >= timeLimitArray[i].asMilliseconds()
-                && time.asMilliseconds() <= timeLimitArray[i + 1].asMilliseconds()) {
-            timeLimit = timeLimitArray[i];
-            break;
-          }
-        } else {
-          timeLimit = TimeLimitList.OUT;
-        }
-      }
+      let timeLimit = this.getTimeLimitFromNow();
 
       switch (timeLimit) {
         case TimeLimitList.MOURNING:
@@ -167,6 +152,42 @@ export class DailyAlert {
     }
   }
 
+  getTimeLimitFromNow() {
+    let time = this.getNowDuration();
+
+    let timeLimit;
+    let timeLimitArray = [
+      TimeLimitList.MOURNING, TimeLimitList.LUNCH,
+      TimeLimitList.BACK_LUNCH, TimeLimitList.OUT
+    ];
+
+    for (let i = 0; i < timeLimitArray.length; i++) {
+
+      if (timeLimitArray[i + 1]) {
+
+        if (time.asMilliseconds() >= timeLimitArray[i].asMilliseconds()
+              && time.asMilliseconds() <= timeLimitArray[i + 1].asMilliseconds()) {
+          timeLimit = timeLimitArray[i];
+          break;
+        }
+      } else {
+
+        if (time.asHours() > TimeLimitList.OUT.asHours()){
+          timeLimit = TimeLimitList.OUT;
+        } else {
+          timeLimit = TimeLimitList.PRE_MOURNING;
+        }
+      }
+    }
+
+    return timeLimit;
+  }
+
+  getNowDuration() {
+    return moment.duration(parseInt(moment().format('HH')), 'hours')
+      .add(parseInt(moment().format('MM')), 'minutes');
+  }
+
   _popLocalNotification(text, timeLimit) {
     LocalNotifications.schedule({
       id: uuid.v1(),
@@ -205,6 +226,8 @@ export class DailyAlert {
   }
 
   popMourningNotification() {
+    this.alerting = true;
+
     this._popAlert('Bom dia!',
       `Chegou no trabalho?`,
       [
@@ -230,6 +253,8 @@ export class DailyAlert {
   }
 
   popLunchNotification() {
+    this.alerting = true;
+
     this._popAlert('Chegou a hora boa!',
       `Saindo para almoçar?`,
       [
@@ -255,6 +280,8 @@ export class DailyAlert {
   }
 
   popBackLunchNotification() {
+    this.alerting = true;
+
     this._popAlert('Um cafezinho iria bem agora...',
       `Chegou do almoço?`,
       [
@@ -290,6 +317,8 @@ export class DailyAlert {
   }
 
   popOutNotification() {
+    this.alerting = true;
+
     this._popAlert('Bora pra casa!',
       `Saindo do trabalho?`,
       [
@@ -352,11 +381,11 @@ export class DailyAlert {
       buttons: buttons
     });
 
-    confirm.onDismiss(() => {
-      this.alerting = false;
-
-      this._delayNotification();
-    });
+    // confirm.onDismiss(() => {
+    //   this.alerting = false;
+    //
+    //   this._delayNotification();
+    // });
 
     setTimeout(() => {
       this.nav.present(confirm);

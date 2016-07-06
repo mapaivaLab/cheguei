@@ -28,22 +28,64 @@ export class GeolocationScheduler {
     if (CONFIGS.notificationRole.geolocConfig.lat && CONFIGS.notificationRole.geolocConfig.lng) {
       let watch = Geolocation.watchPosition();
 
-      // Notification Flag
-      let canNotificate = true;
-
       watch.subscribe((data) => {
-        let dDistance = this.getDistance(CONFIGS.notificationRole.geolocConfig.lng, CONFIGS.notificationRole.geolocConfig.lat,
-          data.coords.longitude, data.coords.latitude);
+        let tLNow = this.dailyAlert.getTimeLimitFromNow();
 
-        console.log(data.coords);
-        console.log('Distance', dDistance);
+        switch (tLNow) {
+          case this.dailyAlert.TimeLimitList.MOURNING:
+          case this.dailyAlert.TimeLimitList.PRE_MOURNING:
 
-        if (dDistance < data.coords.accuracy && canNotificate) {
-          // TODO
+            if (this.dailyAlert.canNotify(true)) {
+
+              if (this.amIInTheSavedPlace(data) && !this.dailyAlert.dailyDraft.mourningNotification) {
+                this.dailyAlert.popMourningNotification();
+              } else if (this.dailyAlert.getNowDuration().asHours() >= 11
+                && !this.dailyAlert.dailyDraft.lunchNotification) {
+                this.dailyAlert.popLunchNotification();
+              }
+            }
+            break;
+          case this.dailyAlert.TimeLimitList.LUNCH:
+
+            if (!this.amIInTheSavedPlace(data) && this.dailyAlert.canNotify(true)
+              && !this.dailyAlert.dailyDraft.lunchNotification) {
+              this.dailyAlert.popLunchNotification();
+            }
+            break;
+          case this.dailyAlert.TimeLimitList.BACK_LUNCH:
+
+            if (this.amIInTheSavedPlace(data) && this.dailyAlert.canNotify(true)
+              && !this.dailyAlert.dailyDraft.backLaunchNotification) {
+              this.dailyAlert.popBackLunchNotification();
+            }
+            break;
+          case this.dailyAlert.TimeLimitList.OUT:
+
+            if (!this.amIInTheSavedPlace(data) && this.dailyAlert.canNotify(true)
+              && !this.dailyAlert.dailyDraft.outNotification) {
+              this.dailyAlert.popOutNotification();
+            }
+            break;
         }
       });
     } else {
       console.warn('[WARN] No geolocConfig set');
+    }
+  }
+
+  amIInTheSavedPlace(data) {
+    let dDistance = this.getDistance(CONFIGS.notificationRole.geolocConfig.lng,
+      CONFIGS.notificationRole.geolocConfig.lat,
+      data.coords.longitude, data.coords.latitude);
+
+    // console.log(data.coords);
+    console.log('Distance', dDistance);
+    console.log(CONFIGS.notificationRole.geolocConfig);
+
+    if (Math.floor(dDistance) < data.coords.accuracy) {
+      return true;
+    } else {
+      return false;
     }
   }
 
